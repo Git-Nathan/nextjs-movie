@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { NextAuthProvider } from "../providers";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -35,7 +37,9 @@ export default async function LocaleLayout({
       <body className={workSans.className}>
         <NextAuthProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
+            <Header />
             {children}
+            <Footer />
           </NextIntlClientProvider>
         </NextAuthProvider>
       </body>
