@@ -1,10 +1,9 @@
+import { workSans } from "@/fonts";
 import "../globals.scss";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-
-const inter = Inter({ subsets: ["latin"] });
+import { NextAuthProvider } from "../providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,10 +32,12 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+      <body className={workSans.className}>
+        <NextAuthProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
