@@ -35,4 +35,55 @@
 }
 
 body {
+  color: var(--accent);
+  background-color: var(--background-color);
+}
+
+.ant-menu {
+  background-color: transparent !important;
+  display: flex !important;
+  font-size: 16px;
+
+  & .ant-menu-item {
+    display: flex !important;
+    align-items: center !important;
+
+    & .ant-menu-item-icon {
+      color: var(--secondary);
+    }
+
+    & .ant-menu-title-content {
+      color: var(--accent);
+      font-weight: 500 !important;
+      height: 40px !important;
+      line-height: 40px !important;
+      margin-left: 8px !important;
+    }
+
+    & .icon {
+      display: block !important;
+    }
+
+    & .active-icon {
+      display: none !important;
+    }
+
+    &.ant-menu-item-selected {
+      & .ant-menu-title-content {
+        color: var(--secondary) !important;
+      }
+
+      & .icon {
+        display: none !important;
+      }
+
+      & .active-icon {
+        display: block !important;
+      }
+    }
+
+    &::after {
+      display: none !important;
+    }
+  }
 }

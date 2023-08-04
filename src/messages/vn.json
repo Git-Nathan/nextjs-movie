@@ -1,5 +1,11 @@
 {
   "Index": {
-    "title": "Chào thế giới!"
+    "title": "Chào thế giới!",
+    "search": "Tìm kiếm"
+  },
+  "Menu": {
+    "home": "Trang chủ",
+    "series": "Phim bộ",
+    "films": "Phim lẻ"
   }
 }

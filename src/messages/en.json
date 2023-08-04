@@ -1,5 +1,11 @@
 {
   "Index": {
-    "title": "Hello world!"
+    "title": "Hello world!",
+    "search": "Search"
+  },
+  "Menu": {
+    "home": "Home",
+    "series": "Series",
+    "films": "Films"
   }
 }
