@@ -4,8 +4,10 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { NextAuthProvider } from "../providers";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { AppHeader } from "@/components/AppHeader";
+import { AppFooter } from "@/components/AppFooter";
+import { Layout } from "antd";
+import { MobileFooter } from "@/components/MobileFooter";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -34,12 +36,15 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className={workSans.className}>
+      <body>
         <NextAuthProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <Header />
-            {children}
-            <Footer />
+            <Layout className={workSans.className}>
+              <AppHeader />
+              {children}
+              <AppFooter />
+              <MobileFooter />
+            </Layout>
           </NextIntlClientProvider>
         </NextAuthProvider>
       </body>

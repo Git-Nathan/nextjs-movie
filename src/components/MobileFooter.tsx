@@ -1,10 +1,11 @@
 "use client";
 
-import * as React from "react";
-import { Menu, type MenuProps } from "antd";
+import { Menu, MenuProps } from "antd";
+import { Footer } from "antd/es/layout/layout";
 import { useTranslations } from "next-intl";
+import * as React from "react";
 
-export function HeaderMenu() {
+export function MobileFooter() {
   const t = useTranslations("Menu");
 
   // Menu
@@ -67,14 +68,15 @@ export function HeaderMenu() {
   };
 
   return (
-    <div className="hidden md:block">
+    <Footer className="mobile-footer fixed bottom-0 inset-x-0 p-0 md:hidden">
       <Menu
+        className="mobile__nav-menu"
         onClick={onClick}
         selectedKeys={[current]}
         mode="horizontal"
         items={items}
         disabledOverflow
       />
-    </div>
+    </Footer>
   );
 }
