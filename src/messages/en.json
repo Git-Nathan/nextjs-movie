@@ -2,7 +2,8 @@
   "Index": {
     "title": "Hello world!",
     "search": "Search",
-    "email": "Email"
+    "email": "Email",
+    "continue": "Continue"
   },
   "Menu": {
     "home": "Home",
@@ -20,6 +21,9 @@
     "guide": "Guide"
   },
   "Account": {
-    "title": "Sign in with your email"
+    "title": "Sign in with your email",
+    "first-time": "¿First time on Disney+?",
+    "subscribe": "Subscribe",
+    "or-login-with": "Or login with:"
   }
 }
