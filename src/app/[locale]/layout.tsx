@@ -1,13 +1,9 @@
-import { workSans } from "@/fonts";
 import "../globals.scss";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { NextAuthProvider } from "../providers";
-import { AppHeader } from "@/components/AppHeader";
-import { AppFooter } from "@/components/AppFooter";
-import { Layout } from "antd";
-import { MobileFooter } from "@/components/MobileFooter";
+import { workSans } from "@/fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -36,15 +32,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body>
+      <body className={workSans.className}>
         <NextAuthProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <Layout className={workSans.className}>
-              <AppHeader />
-              {children}
-              <AppFooter />
-              <MobileFooter />
-            </Layout>
+            {children}
           </NextIntlClientProvider>
         </NextAuthProvider>
       </body>
