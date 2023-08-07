@@ -2,7 +2,8 @@
   "Index": {
     "title": "Chào thế giới!",
     "search": "Tìm kiếm",
-    "email": "Email"
+    "email": "Email",
+    "continue": "Tiếp tục"
   },
   "Menu": {
     "home": "Trang chủ",
@@ -24,6 +25,9 @@
     "guide": "Hướng dẫn"
   },
   "account": {
-    "title": "Đăng nhập bằng email của bạn"
+    "title": "Đăng nhập bằng email của bạn",
+    "first-time": "¿Lần đầu đến Disney+?",
+    "subscribe": "Đăng ký",
+    "or-login-with": "Hoặc đăng nhập bằng:"
   }
 }

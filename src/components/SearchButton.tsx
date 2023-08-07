@@ -26,7 +26,7 @@ export function SearchButton(props: ISearchButtonProps) {
   useClickOutside(searchBarRef, handleClose);
 
   return (
-    <div className="relative">
+    <div className="relative mr-2 md:mr-4">
       <Button
         className="search-button border-none rounded-full text-white h-12 px-2 flex items-center md:px-4 hover:text-white"
         onClick={handleOpen}

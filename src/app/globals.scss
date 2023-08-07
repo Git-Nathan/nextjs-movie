@@ -61,6 +61,10 @@ body {
   &-3 {
     -webkit-line-clamp: 3;
   }
+
+  &-4 {
+    -webkit-line-clamp: 4;
+  }
 }
 
 .ant-menu {
@@ -159,10 +163,7 @@ body {
 }
 
 .homepage__text-overview {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  @extend .text-over-4;
 }
 
 .home__btn-infor {
@@ -171,6 +172,27 @@ body {
     &:not(:disabled):not(.ant-btn-disabled):hover {
       color: var(--neutral-600);
       border-color: var(--neutral-300);
+    }
+  }
+}
+
+.ant-form-item {
+  margin: 0 !important;
+}
+
+.ant-spin {
+  &.account-spin {
+    .ant-spin-dot {
+      background-image: url("/icons/loading.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      width: 30px !important;
+      height: 30px !important;
+
+      .ant-spin-dot-item {
+        display: none !important;
+      }
     }
   }
 }
@@ -187,4 +209,21 @@ body {
 
 .ant-modal-content {
   padding: 0 !important;
+}
+
+.ant-popover {
+  .ant-popover-arrow {
+    top: 1px !important;
+    &::before {
+      background-color: var(--neutral-700) !important;
+    }
+  }
+
+  .ant-popover-inner {
+    background-color: var(--neutral-700) !important;
+    border-radius: 8px;
+    border: 1px solid var(--border, #353843);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
+    padding: 0 !important;
+  }
 }
