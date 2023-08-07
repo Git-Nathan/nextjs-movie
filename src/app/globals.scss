@@ -51,18 +51,20 @@ body {
 .text-over {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  @extend .text-over-1;
 
   &-2 {
+    @extend .text-over;
     -webkit-line-clamp: 2;
   }
 
   &-3 {
+    @extend .text-over;
     -webkit-line-clamp: 3;
   }
 
   &-4 {
+    @extend .text-over;
     -webkit-line-clamp: 4;
   }
 }
@@ -176,6 +178,16 @@ body {
   }
 }
 
+.home__btn-watch {
+  &.ant-btn-default {
+    @extend .ant-btn-default;
+    &:not(:disabled):not(.ant-btn-disabled):hover {
+      color: var(--neutral-600);
+      border-color: var(--neutral-200);
+    }
+  }
+}
+
 .ant-form-item {
   margin: 0 !important;
 }
@@ -193,16 +205,6 @@ body {
       .ant-spin-dot-item {
         display: none !important;
       }
-    }
-  }
-}
-
-.home__btn-watch {
-  &.ant-btn-default {
-    @extend .ant-btn-default;
-    &:not(:disabled):not(.ant-btn-disabled):hover {
-      color: var(--neutral-600);
-      border-color: var(--neutral-200);
     }
   }
 }

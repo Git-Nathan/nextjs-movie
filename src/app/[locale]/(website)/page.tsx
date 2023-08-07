@@ -92,8 +92,8 @@ export default function Home() {
             key={item.id}
             className={`swiper relative aspect-[1440/980] w-full bg-center bg-cover bg-no-repeat bg-[]`}
             style={{
-              backgroundImage: `url('https://image.tmdb.org/t/p/original/${item.backdrop_path}'), 
-              linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0))`,
+              backgroundImage: `linear-gradient(202deg,rgba(26, 29, 41, 0) 0%,rgba(26, 29, 41, 0.79) 59.65%,#1a1d29 100%),
+              url('https://image.tmdb.org/t/p/original/${item.backdrop_path}')`,
             }}
           >
             <div
