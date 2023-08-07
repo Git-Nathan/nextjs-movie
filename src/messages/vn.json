@@ -29,5 +29,13 @@
     "first-time": "¿Lần đầu đến Disney+?",
     "subscribe": "Đăng ký",
     "or-login-with": "Hoặc đăng nhập bằng:"
+  },
+  "Popover": {
+    "edit-profile": "Chỉnh sửa hồ sơ",
+    "favorite": "Yêu thích",
+    "my-subscription": "Kênh đăng ký",
+    "My account": "Tài khoản của tôi",
+    "Help": "Trợ giúp",
+    "Sign off": "Đăng xuất"
   }
 }

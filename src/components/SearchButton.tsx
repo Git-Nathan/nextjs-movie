@@ -1,9 +1,10 @@
 "use client";
 
-import { lato } from "@/fonts";
+import { appRouter } from "@/configs";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 export interface ISearchButtonProps {}
@@ -11,7 +12,10 @@ export interface ISearchButtonProps {}
 export function SearchButton(props: ISearchButtonProps) {
   const t = useTranslations("Index");
 
-  // Open search bar
+  //Router
+  const router = useRouter();
+
+  // Search bar
   const [open, setOpen] = useState<boolean>(false);
   const searchBarRef = useRef<HTMLDivElement>(null);
 
@@ -21,6 +25,17 @@ export function SearchButton(props: ISearchButtonProps) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSearch = (value: string) => {
+    if (value) {
+      router.push(
+        `${appRouter.result}?${new URLSearchParams({
+          search_query: value,
+        }).toString()}`
+      );
+      handleClose();
+    }
   };
 
   useClickOutside(searchBarRef, handleClose);
@@ -43,16 +58,14 @@ export function SearchButton(props: ISearchButtonProps) {
         <>
           <div className="fixed inset-0 bg-[#0000002c] md:hidden"></div>
           <div
-            className="fixed flex items-center top-0 inset-x-0 h-12 bg-neutral700 md:block md:absolute md:right-0 md:left-auto md:w-[329px] md:rounded md:border md:border-[rgba(255,255,255,0.12)] md:border-solid"
+            className="fixed z-50 flex items-center top-0 inset-x-0 h-12 bg-neutral700 md:block md:absolute md:right-0 md:left-auto md:w-[329px] md:rounded md:border md:border-[rgba(255,255,255,0.12)] md:border-solid"
             ref={searchBarRef}
           >
             <div className="flex items-center w-full h-full">
-              <input
-                className={
-                  "relative h-full w-full rounded bg-neutral700 outline-none border-none text-base text-white font-normal pl-14 pr-14 shadow-none " +
-                  lato.className
-                }
+              <Input.Search
+                className="relative w-full pl-12 pr-12"
                 placeholder="Search"
+                onSearch={handleSearch}
               />
               <div
                 className="absolute w-6 h-6 left-4"

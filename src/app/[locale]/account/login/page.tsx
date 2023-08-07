@@ -6,7 +6,13 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 
-export default function LoginPage() {
+interface ILoginPage {
+  searchParams: {
+    callbackUrl: string;
+  };
+}
+
+export default function LoginPage({ searchParams }: ILoginPage) {
   const t = useTranslations();
 
   //Form
@@ -79,7 +85,9 @@ export default function LoginPage() {
                 style={{ backgroundImage: `url('/icons/google.svg')` }}
               ></div>
             }
-            onClick={() => signIn("google")}
+            onClick={() =>
+              signIn("google", { callbackUrl: searchParams.callbackUrl })
+            }
           />
           <Button
             className="flex items-center static justify-center !w-14 h-14 right-4 p-0 border-none rounded-full hover:bg-slate-700 ml-8"
@@ -89,7 +97,9 @@ export default function LoginPage() {
                 style={{ backgroundImage: `url('/icons/facebook.svg')` }}
               ></div>
             }
-            onClick={() => signIn("facebook")}
+            onClick={() =>
+              signIn("facebook", { callbackUrl: searchParams.callbackUrl })
+            }
           />
         </div>
       </div>

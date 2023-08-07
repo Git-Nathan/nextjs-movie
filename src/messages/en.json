@@ -29,5 +29,13 @@
     "first-time": "¿First time on Disney+?",
     "subscribe": "Subscribe",
     "or-login-with": "Or login with:"
+  },
+  "Popover": {
+    "edit-profile": "Edit profiles",
+    "favorite": "Favorite",
+    "my-subscription": "My subscription",
+    "My account": "My account",
+    "Help": "Help",
+    "Sign off": "Sign off"
   }
 }

@@ -13,6 +13,9 @@ const handler = NextAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
     }),
   ],
+  pages: {
+    signIn: "/account/login",
+  },
 });
 
 export { handler as GET, handler as POST };

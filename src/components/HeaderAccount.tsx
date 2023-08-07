@@ -1,12 +1,13 @@
 export interface IHeaderAccount {}
-import { appRouter } from "@/configs";
-import { Button, Popover, Spin } from "antd";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { workSans } from "@/fonts";
+import { Button, Popover, Skeleton } from "antd";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export function HeaderAccount(props: IHeaderAccount) {
   const { data: session, status } = useSession();
+  const t = useTranslations("Popover");
 
   const [openPopover, setOpenPopover] = useState(false);
 
@@ -17,20 +18,33 @@ export function HeaderAccount(props: IHeaderAccount) {
   if (status === "loading")
     return (
       <div className="w-12 h-12 flex items-center justify-center">
-        <Spin className="account-spin" />
+        <Skeleton.Avatar size={"large"} active />
       </div>
     );
 
-  if (session?.user)
+  if (session)
     return (
       <Popover
         content={
-          <div>
-            <p>Content</p>
-            <p>Content</p>
+          <div
+            className={
+              "w-[248px] text-white text-base px-5 py-2 flex flex-col " +
+              workSans.className
+            }
+          >
+            <div className="py-3">{t("edit-profile")}</div>
+            <div className="py-3">{t("favorite")}</div>
+            <div className="py-3">{t("my-subscription")}</div>
+            <div className="py-3">{t("My account")}</div>
+            <div className="py-3">{t("Help")}</div>
+            <Button
+              className="py-3 text-left border-none text-white mx-0 p-0 text-base h-auto"
+              onClick={() => signOut()}
+            >
+              {t("Sign off")}
+            </Button>
           </div>
         }
-        title="Title"
         trigger="click"
         placement="bottomRight"
         arrow={{ pointAtCenter: true }}
@@ -45,14 +59,14 @@ export function HeaderAccount(props: IHeaderAccount) {
     );
 
   return (
-    <Link
-      href={appRouter.account.login}
-      className="header__user w-12 h-12 rounded-full border-[2px] border-secondary bg-center bg-no-repeat bg-cover flex items-center justify-center"
+    <Button
+      className="header__user p-0 w-12 h-12 rounded-full border-[2px] border-secondary bg-center bg-no-repeat bg-cover flex items-center justify-center"
+      onClick={() => signIn()}
     >
       <div
         className="w-7 h-7 bg-center bg-no-repeat bg-cover"
         style={{ backgroundImage: `url('/icons/user.svg')` }}
       ></div>
-    </Link>
+    </Button>
   );
 }
