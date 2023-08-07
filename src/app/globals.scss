@@ -157,3 +157,34 @@ body {
     color: white !important;
   }
 }
+
+.homepage__text-overview {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.home__btn-infor {
+  &.ant-btn-default {
+    @extend .ant-btn-default;
+    &:not(:disabled):not(.ant-btn-disabled):hover {
+      color: var(--neutral-600);
+      border-color: var(--neutral-300);
+    }
+  }
+}
+
+.home__btn-watch {
+  &.ant-btn-default {
+    @extend .ant-btn-default;
+    &:not(:disabled):not(.ant-btn-disabled):hover {
+      color: var(--neutral-600);
+      border-color: var(--neutral-200);
+    }
+  }
+}
+
+.ant-modal-content {
+  padding: 0 !important;
+}

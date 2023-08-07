@@ -9,6 +9,10 @@
     "series": "Series",
     "films": "Films"
   },
+  "HomePage": {
+    "watch": "Watch Trailer",
+    "infor": "Information Detail"
+  },
   "Footer": {
     "policy": "Privacy Policy",
     "agreement": "Subscription agreement",

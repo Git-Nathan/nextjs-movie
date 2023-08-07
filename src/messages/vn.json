@@ -9,6 +9,10 @@
     "series": "Phim bộ",
     "films": "Phim lẻ"
   },
+  "HomePage": {
+    "watch": " Xem Trailer",
+    "infor": "Thêm thông tin"
+  },
   "Footer": {
     "policy": "Chính sách bảo mật",
     "agreement": "Thỏa thuận thuê bao",

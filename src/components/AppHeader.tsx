@@ -11,7 +11,7 @@ export interface IHeaderProps {}
 
 export function AppHeader(props: IHeaderProps) {
   return (
-    <Header className="header text-white font-medium fixed top-0 inset-x-0 w-full h-14 bg-[linear-gradient(180deg,#0E1012_0%,rgba(14,16,18,0.00)_100%)] md:h-20">
+    <Header className="header z-50 text-white font-medium fixed top-0 inset-x-0 w-full h-14 bg-[linear-gradient(180deg,#0E1012_0%,rgba(14,16,18,0.00)_100%)] md:h-20">
       <div className="w-[89%] h-full flex justify-between mx-auto">
         <div className="header__left flex items-center">
           <Link href={appPath.home}>
