@@ -1,70 +1,70 @@
-"use client";
+'use client'
 
-import * as React from "react";
-import { Menu, type MenuProps } from "antd";
-import { useTranslations } from "next-intl";
+import * as React from 'react'
+import { Menu, type MenuProps } from 'antd'
+import { useTranslations } from 'next-intl'
 
 export function HeaderMenu() {
-  const t = useTranslations("Menu");
+  const t = useTranslations('Menu')
 
   // Menu
-  const [current, setCurrent] = React.useState("home");
+  const [current, setCurrent] = React.useState('home')
 
-  const items: MenuProps["items"] = [
+  const items: MenuProps['items'] = [
     {
-      label: t("home"),
-      key: "home",
+      label: t('home'),
+      key: 'home',
       icon: (
         <>
           <div
-            className="icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/home.svg')` }}
           ></div>
           <div
-            className="active-icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/home-active.svg')` }}
           ></div>
         </>
       ),
     },
     {
-      label: t("series"),
-      key: "series",
+      label: t('series'),
+      key: 'series',
       icon: (
         <>
           <div
-            className="icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/tv.svg')` }}
           ></div>
           <div
-            className="active-icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/tv-active.svg')` }}
           ></div>
         </>
       ),
     },
     {
-      label: t("films"),
-      key: "films",
+      label: t('films'),
+      key: 'films',
       icon: (
         <>
           <div
-            className="icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/movie.svg')` }}
           ></div>
           <div
-            className="active-icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/movie-active.svg')` }}
           ></div>
         </>
       ),
     },
-  ];
+  ]
 
-  const onClick: MenuProps["onClick"] = (e) => {
+  const onClick: MenuProps['onClick'] = (e) => {
     // console.log("click ", e);
-    setCurrent(e.key);
-  };
+    setCurrent(e.key)
+  }
 
   return (
     <div className="hidden md:block">
@@ -76,5 +76,5 @@ export function HeaderMenu() {
         disabledOverflow
       />
     </div>
-  );
+  )
 }

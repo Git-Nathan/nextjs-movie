@@ -37,5 +37,15 @@
     "My account": "Tài khoản của tôi",
     "Help": "Trợ giúp",
     "Sign off": "Đăng xuất"
+  },
+  "Result": {
+    "Results with your search:": "Kết quả với tìm kiếm của bạn:",
+    "We recommend these similar titles": "Tiêu đề được đề xuất",
+    "No results found": "Không có kết quả nào được tìm thấy"
+  },
+  "Detail": {
+    "WATCH NOW": "XEM NGAY",
+    "Similar": "Phim tương tự",
+    "trailer": "trailer"
   }
 }

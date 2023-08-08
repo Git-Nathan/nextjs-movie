@@ -1,4 +1,4 @@
-import { APIHost } from "@/utils/contants";
+import { APIHost } from '@/utils/contants'
 
 export const API_PATHS = {
   detailAccount: `${APIHost}/account/`,
@@ -12,4 +12,4 @@ export const API_PATHS = {
   //   trailerTvshow: `${APIHost}/tv/11/videos`,
   //   similarMovies: `${APIHost}/movie/11/similar`,
   //   recommendMovies: `${APIHost}/movie/11/recommendations`,
-};
+}

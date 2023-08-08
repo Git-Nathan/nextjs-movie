@@ -37,5 +37,15 @@
     "My account": "My account",
     "Help": "Help",
     "Sign off": "Sign off"
+  },
+  "Result": {
+    "Results with your search:": "Results with your search:",
+    "We recommend these similar titles": "We recommend these similar titles",
+    "No results found": "No results found"
+  },
+  "Detail": {
+    "WATCH NOW": "WATCH NOW",
+    "Similar": "Similar",
+    "trailer": "trailer"
   }
 }

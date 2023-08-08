@@ -1,20 +1,20 @@
-"use client";
+'use client'
 
-import { Menu, MenuProps } from "antd";
-import { Footer } from "antd/es/layout/layout";
-import { useTranslations } from "next-intl";
-import * as React from "react";
+import { Menu, MenuProps } from 'antd'
+import { Footer } from 'antd/es/layout/layout'
+import { useTranslations } from 'next-intl'
+import * as React from 'react'
 
 export function MobileFooter() {
-  const t = useTranslations("Menu");
+  const t = useTranslations('Menu')
 
   // Menu
-  const [current, setCurrent] = React.useState("home");
+  const [current, setCurrent] = React.useState('home')
 
-  const items: MenuProps["items"] = [
+  const items: MenuProps['items'] = [
     {
-      label: t("home"),
-      key: "home",
+      label: t('home'),
+      key: 'home',
       icon: (
         <>
           <div
@@ -29,8 +29,8 @@ export function MobileFooter() {
       ),
     },
     {
-      label: t("series"),
-      key: "series",
+      label: t('series'),
+      key: 'series',
       icon: (
         <>
           <div
@@ -45,8 +45,8 @@ export function MobileFooter() {
       ),
     },
     {
-      label: t("films"),
-      key: "films",
+      label: t('films'),
+      key: 'films',
       icon: (
         <>
           <div
@@ -60,13 +60,13 @@ export function MobileFooter() {
         </>
       ),
     },
-  ];
+  ]
 
-  const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
-    setCurrent(e.key);
-  };
-
+  const onClick: MenuProps['onClick'] = (e) => {
+    console.log('click ', e)
+    setCurrent(e.key)
+  }
+ 
   return (
     <Footer className="mobile-footer fixed bottom-0 inset-x-0 p-0 md:hidden">
       <Menu
@@ -78,5 +78,5 @@ export function MobileFooter() {
         disabledOverflow
       />
     </Footer>
-  );
+  )
 }

@@ -1,80 +1,80 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
-import * as React from "react";
-import { Button, Modal } from "antd";
-import { useTranslations } from "next-intl";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
+import { useRouter } from 'next/navigation'
+import * as React from 'react'
+import { Button, Modal } from 'antd'
+import { useTranslations } from 'next-intl'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules'
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { useStore } from "@/store/store";
-import { fetchApi } from "@/configs/fetchApi";
-import { API_PATHS } from "@/configs/api";
-import { APIHost } from "@/utils/contants";
+import 'swiper/css'
+import 'swiper/css/effect-fade'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import { useStore } from '@/store/store'
+import { fetchApi } from '@/configs/fetchApi'
+import { API_PATHS } from '@/configs/api'
+import { APIHost } from '@/utils/contants'
 
 export default function Home() {
-  const t = useTranslations("HomePage");
-  const { setSelectedID } = useStore();
-  const router = useRouter();
-  const lang = "en-US";
+  const t = useTranslations('HomePage')
+  const { setSelectedID } = useStore()
+  const router = useRouter()
+  const lang = 'en-US'
 
-  const [dataTrendingAll, setDataTrendingAll] = React.useState([]);
+  const [dataTrendingAll, setDataTrendingAll] = React.useState([])
 
   const fetchData = React.useCallback(
     async (url: string, setData: React.Dispatch<any>) => {
       try {
-        const res = await fetchApi(url, "get");
-        setData(res.results);
+        const res = await fetchApi(url, 'get')
+        setData(res.results)
       } catch (error) {
-        console.log("Error!", error);
+        console.log('Error!', error)
       }
     },
-    [lang]
-  );
+    [lang],
+  )
 
   React.useEffect(() => {
-    fetchData(`${API_PATHS.trendingAll}?language=${lang}`, setDataTrendingAll);
-  }, [fetchData]);
+    fetchData(`${API_PATHS.trendingAll}?language=${lang}`, setDataTrendingAll)
+  }, [fetchData])
 
   const handleClickInfor = (name: string) => {
-    let newName = name.split(" ").join("").toLowerCase();
-    router.push(`/detail-infor/${newName}`);
-  };
+    let newName = name.split(' ').join('').toLowerCase()
+    router.push(`/detail-infor/${newName}`)
+  }
 
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   const handleClickWatch = () => {
     // setVideoKey([]);
-    setIsModalOpen(true);
-  };
+    setIsModalOpen(true)
+  }
 
-  const [videoKey, setVideoKey] = React.useState<any>([]);
-  const [selectedItem, setSelectedItem] = React.useState<any>();
+  const [videoKey, setVideoKey] = React.useState<any>([])
+  const [selectedItem, setSelectedItem] = React.useState<any>()
 
   const key = videoKey.find(
-    (item: any) => item.type === "Teaser" || item.type === "Trailer"
-  );
+    (item: any) => item.type === 'Teaser' || item.type === 'Trailer',
+  )
 
   React.useEffect(() => {
     if (selectedItem) {
       fetchData(
         `${APIHost}${selectedItem?.media_type}/${selectedItem?.id}/videos`,
-        setVideoKey
-      );
+        setVideoKey,
+      )
     }
-  }, [fetchData, selectedItem]);
+  }, [fetchData, selectedItem])
 
   // console.log(key);
   return (
-    <main>
+    <>
       <Swiper
         spaceBetween={20}
-        effect={"fade"}
+        effect={'fade'}
         centeredSlides={true}
         loop={true}
         pagination={{
@@ -98,9 +98,9 @@ export default function Home() {
           >
             <div
               className={`homepage__text-banner absolute left-20 ${
-                item?.overview?.length > 100 ? "top-[40%]" : "top-[45%]"
+                item?.overview?.length > 100 ? 'top-[40%]' : 'top-[45%]'
               } ${
-                item?.title?.length < 12 ? "text-8xl" : "text-5xl"
+                item?.title?.length < 12 ? 'text-8xl' : 'text-5xl'
               } max-w-3xl uppercase`}
             >
               {item.title || item.name}
@@ -114,21 +114,21 @@ export default function Home() {
                   className="home__btn-watch text-base bg-white hover:bg-neutral-300  font-bold h-12 px-6 mr-6 flex items-center"
                   icon={<img src="/icons/icon-play.svg" />}
                   onClick={() => {
-                    setSelectedItem(item);
-                    handleClickWatch();
+                    setSelectedItem(item)
+                    handleClickWatch()
                   }}
                 >
-                  {t("watch")}
+                  {t('watch')}
                 </Button>
                 <Button
                   className="home__btn-infor text-base bg-[rgba(0, 0, 0, 0.1)] hover:bg-neutral-400 hover:color-neutral700 text-neutral100 font-bold h-12 px-6 flex items-center"
                   icon={<img src="/icons/icon-infor.svg" />}
                   onClick={() => {
-                    setSelectedID(item?.id, item?.media_type);
-                    handleClickInfor(item?.title || item?.name);
+                    setSelectedID(item?.id, item?.media_type)
+                    handleClickInfor(item?.title || item?.name)
                   }}
                 >
-                  {t("infor")}
+                  {t('infor')}
                 </Button>
               </div>
             </div>
@@ -153,6 +153,6 @@ export default function Home() {
           allowFullScreen
         ></iframe>
       </Modal>
-    </main>
-  );
+    </>
+  )
 }
