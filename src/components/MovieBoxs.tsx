@@ -12,29 +12,39 @@ export interface IMovieBoxs {
 
 export function MovieBoxs({ loading, data }: IMovieBoxs) {
   if (loading)
-    return data.map((result) => (
-      <Skeleton.Button
-        key={result.id}
-        className="!w-full !h-auto aspect-[240/136]"
-        block
-        active
-      />
-    ))
+    return (
+      <>
+        {Array(20)
+          .fill(0)
+          .map((result) => (
+            <Skeleton.Button
+              key={result.id}
+              className="aspect-[240/136] !h-auto !w-full"
+              block
+              active
+            />
+          ))}
+      </>
+    )
 
-  return data.map((result) => (
-    <Link
-      href={appRouter.detailInfo.index(result.id)}
-      key={result.id}
-      className="relative w-full aspect-[240/136]"
-    >
-      <Image
-        src={getImageUrl(result.backdrop_path)}
-        alt={result.title || 'Untitled'}
-        width={240}
-        height={136}
-        priority
-        className="w-full h-full top-0 left-0 object-cover rounded-lg"
-      />
-    </Link>
-  ))
+  return (
+    <>
+      {data.map((result) => (
+        <Link
+          href={appRouter.detailInfo.index(result.id)}
+          key={result.id}
+          className="relative aspect-[240/136] w-full"
+        >
+          <Image
+            src={getImageUrl(result.backdrop_path)}
+            alt={result.title || 'Untitled'}
+            width={240}
+            height={136}
+            priority
+            className="left-0 top-0 h-full w-full rounded-lg object-cover"
+          />
+        </Link>
+      ))}
+    </>
+  )
 }
