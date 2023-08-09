@@ -68,6 +68,11 @@ body {
     -webkit-line-clamp: 4;
   }
 
+  &-5 {
+    @extend .text-over;
+    -webkit-line-clamp: 5;
+  }
+
   &-6 {
     @extend .text-over;
     -webkit-line-clamp: 6;
@@ -218,7 +223,7 @@ body {
 }
 
 .ant-modal-body {
- background-color:#101116;
+  background-color: #101116;
 }
 
 .ant-popover {
@@ -230,11 +235,11 @@ body {
   }
 
   .ant-popover-inner {
-    background-color: var(--neutral-700) !important;
+    background-color: transparent !important;
     border-radius: 8px;
-    border: 1px solid var(--border, #353843);
-    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
+    border: none !important;
     padding: 0 !important;
+    box-shadow: none !important;
   }
 }
 
@@ -256,5 +261,22 @@ body {
 .slide-mobile.swiper {
   height: 680px;
   overflow: auto !important;
-overflow-x: hidden !important;
+  overflow-x: hidden !important;
+}
+
+.movie-box {
+  .movie-card {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s;
+  }
+
+  &:hover {
+    .movie-card {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
 }

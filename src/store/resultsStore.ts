@@ -2,8 +2,8 @@ import { IMovieBox } from '@/interface'
 import { create } from 'zustand'
 
 interface IResultStore {
-  searchQuery: string
-  setSearchQuery: (searchQuery: string) => void
+  searchContent: string
+  setSearchContent: (searchContent: string) => void
   listResult: IMovieBox[]
   setListResult: (listResult: IMovieBox[]) => void
   loading: boolean
@@ -12,10 +12,10 @@ interface IResultStore {
 
 export const useResultStore = create<IResultStore>((set, get) => {
   return {
-    searchQuery: '',
-    setSearchQuery: (searchQuery) => {
+    searchContent: '',
+    setSearchContent: (searchContent) => {
       set({
-        searchQuery,
+        searchContent,
       })
     },
     listResult: [],

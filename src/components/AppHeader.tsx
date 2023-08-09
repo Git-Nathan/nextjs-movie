@@ -2,11 +2,12 @@
 
 import { HeaderMenu } from '@/components/HeaderMenu'
 import { SearchButton } from '@/components/SearchButton'
+import { appRouter } from '@/configs'
 import { Header } from 'antd/es/layout/layout'
 import Image from 'next/image'
 import Link from 'next/link'
 import { HeaderAccount } from './HeaderAccount'
-import { appRouter } from '@/configs'
+import { LanguageButton } from './LanguageButton'
 
 export interface IHeaderProps {}
 
@@ -27,6 +28,7 @@ export function AppHeader(props: IHeaderProps) {
           <HeaderMenu />
         </div>
         <div className="header__right flex items-center">
+          <LanguageButton />
           <SearchButton />
           <HeaderAccount />
         </div>

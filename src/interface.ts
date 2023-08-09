@@ -3,6 +3,7 @@ export interface IMovieBox {
   title: string
   backdrop_path: string
   overview: string
+  release_date: string
 }
 
 export interface IGenres {

@@ -1,24 +1,28 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import * as React from 'react'
 import { Button } from 'antd'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import {
+  Autoplay,
+  EffectCoverflow,
+  Navigation,
+  Pagination,
+} from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, EffectFade, Pagination, Navigation, EffectCoverflow } from 'swiper/modules'
-import Image from "next/image"
 
 // Import Swiper styles
+import { api } from '@/api'
+import { AppSpin } from '@/common/AppSpin'
+import BtnWatchTrailer from '@/common/BtnWatch'
+import { useStore } from '@/store/store'
+import { getImageUrl } from '@/utils/functions'
+import { useEffect, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { useStore } from '@/store/store'
-import BtnWatchTrailer from '@/common/BtnWatch'
-import { AppSpin } from '@/common/AppSpin'
-import { useEffect, useState } from 'react'
-import { api } from '@/api'
-import { getImageUrl } from '@/utils/functions'
 
 export default function Home() {
   const t = useTranslations('HomePage')
@@ -31,14 +35,14 @@ export default function Home() {
   const [dataTrendingAll, setDataTrendingAll] = useState([])
 
   useEffect(() => {
-  setLoading(true)
-  const getData = async () => {
-    const response = await api.getTrendingAll()
-    setDataTrendingAll(response.results) 
-    setLoading(false)         
-  }
-  getData()
-}, [])
+    setLoading(true)
+    const getData = async () => {
+      const response = await api.getTrendingAll()
+      setDataTrendingAll(response.results)
+      setLoading(false)
+    }
+    getData()
+  }, [])
 
   // const handleClickInfor = (name: string) => {
   //   let newName = name.split(' ').join('').toLowerCase()
@@ -52,7 +56,7 @@ export default function Home() {
   if (loading) return <AppSpin />
 
   return (
-    <div className='my-6 mx-6'>
+    <div className="mx-6 my-6">
       {/* <Swiper
         spaceBetween={20}
         effect={'fade'}
@@ -71,7 +75,7 @@ export default function Home() {
         {dataTrendingAll.slice(0, 10).map((item: any) => (
           <SwiperSlide
             key={item.id}
-            className={`swiper relative aspect-[1440/980] w-full bg-center bg-cover bg-no-repeat bg-[]`}
+            className={`swiper relative aspect-[1440/980] w-full bg-[] bg-cover bg-center bg-no-repeat`}
             style={{
               backgroundImage: `linear-gradient(202deg,rgba(26, 29, 41, 0) 0%,rgba(26, 29, 41, 0.79) 59.65%,#1a1d29 100%),
               linear-gradient(180deg, rgba(26, 29, 41, 0.00) 0%, rgba(26, 29, 41, 0.79) 59.65%, #1A1D29 100%),
@@ -87,7 +91,7 @@ export default function Home() {
             >
               {item.title || item.name}
 
-              <h1 className="homepage__text-overview text-xl mt-5 mb-8">
+              <h1 className="homepage__text-overview mb-8 mt-5 text-xl">
                 {item.overview}
               </h1>
 
@@ -111,7 +115,7 @@ export default function Home() {
       </Swiper> */}
 
       <Swiper
-      className='slide-mobile'
+        className="slide-mobile"
         effect={'coverflow'}
         grabCursor={true}
         centeredSlides={true}
@@ -138,38 +142,50 @@ export default function Home() {
             key={item.id}
             // className='w-full'
           >
-            <div className={`swiper relative aspect-[556/835] w-full bg-center bg-cover bg-no-repeat`}
-            style={{
-              backgroundImage: `url('${getImageUrl(item.poster_path)}')`,borderRadius: "5px"
-            }}>
-            </div>
+            <div
+              className={`swiper relative aspect-[556/835] w-full bg-cover bg-center bg-no-repeat`}
+              style={{
+                backgroundImage: `url('${getImageUrl(item.poster_path)}')`,
+                borderRadius: '5px',
+              }}
+            ></div>
 
-           <div className='flex justify-center w-full absolute z-10'>
-           <div
-              className={`homepage__text-banner absolute left-0 bottom-[-230px] text-lg w-full uppercase text-center`}
-            >
-              {item.title || item.name}
+            <div className="absolute z-10 flex w-full justify-center">
+              <div
+                className={`homepage__text-banner absolute bottom-[-230px] left-0 w-full text-center text-lg uppercase`}
+              >
+                {item.title || item.name}
 
-              <h1 className="homepage__text-overview text-xs mt-5 mb-8">
-                {item.overview}
-              </h1>
+                <h1 className="homepage__text-overview mb-8 mt-5 text-xs">
+                  {item.overview}
+                </h1>
 
-              <div className="flex">
-               <BtnWatchTrailer id={item?.id} media_type={item?.media_type} />
-                <Button
-                  className="home__btn-infor text-base bg-[rgba(0, 0, 0, 0.1)] hover:bg-neutral-400 hover:color-neutral700 text-neutral100 font-bold h-12 px-6 flex items-center"
-                  icon={<Image alt="" width={24} height={24} src="/icons/icon-infor.svg" />}
-                  onClick={() => {
-                    setSelectedID(item?.id, item?.media_type)
-                    // handleClickInfor(item?.title || item?.name)
-                    handleClickInfor(item?.id)
-                  }}
-                >
-                  {t('infor')}
-                </Button>
+                <div className="flex">
+                  <BtnWatchTrailer
+                    id={item?.id}
+                    media_type={item?.media_type}
+                  />
+                  <Button
+                    className="home__btn-infor bg-[rgba(0, 0, 0, 0.1)] hover:color-neutral700 flex h-12 items-center px-6 text-base font-bold text-neutral100 hover:bg-neutral-400"
+                    icon={
+                      <Image
+                        alt=""
+                        width={24}
+                        height={24}
+                        src="/icons/icon-infor.svg"
+                      />
+                    }
+                    onClick={() => {
+                      setSelectedID(item?.id, item?.media_type)
+                      // handleClickInfor(item?.title || item?.name)
+                      handleClickInfor(item?.id)
+                    }}
+                  >
+                    {t('infor')}
+                  </Button>
+                </div>
               </div>
             </div>
-           </div>
           </SwiperSlide>
         ))}
       </Swiper>

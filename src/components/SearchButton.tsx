@@ -18,6 +18,7 @@ export function SearchButton(props: ISearchButtonProps) {
   // Search bar
   const [open, setOpen] = useState<boolean>(false)
   const searchBarRef = useRef<HTMLDivElement>(null)
+  const [searchContent, setSearchContent] = useState('')
 
   const handleOpen = () => {
     setOpen(true)
@@ -36,6 +37,10 @@ export function SearchButton(props: ISearchButtonProps) {
       )
       handleClose()
     }
+  }
+
+  const handleClear = () => {
+    setSearchContent('')
   }
 
   useClickOutside(searchBarRef, handleClose)
@@ -63,8 +68,10 @@ export function SearchButton(props: ISearchButtonProps) {
           >
             <div className="flex h-full w-full items-center">
               <Input.Search
-                className="relative w-full pl-12 pr-12"
+                className="relative w-full pl-12 pr-[90px]"
                 placeholder="Search"
+                value={searchContent}
+                onChange={(e) => setSearchContent(e.target.value)}
                 onSearch={handleSearch}
                 autoFocus
               />
@@ -72,6 +79,12 @@ export function SearchButton(props: ISearchButtonProps) {
                 className="absolute left-4 h-6 w-6"
                 style={{ backgroundImage: `url('/icons/search.svg')` }}
               ></div>
+              <Button
+                className="absolute right-12 flex h-8 items-center justify-center rounded-full border-none px-2 py-0 text-white hover:bg-slate-700"
+                onClick={handleClear}
+              >
+                Clear
+              </Button>
               <Button
                 className="absolute right-4 flex h-8 w-8 items-center justify-center rounded-full border-none p-0 hover:bg-slate-700"
                 icon={

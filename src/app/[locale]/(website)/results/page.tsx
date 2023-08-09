@@ -14,20 +14,32 @@ export default function ResultPage() {
   const t = useTranslations('Result')
 
   // Results
-  const { listResult, loading, setListResult, setLoading } = useResultStore()
+  const {
+    listResult,
+    loading,
+    setListResult,
+    setLoading,
+    searchContent,
+    setSearchContent,
+  } = useResultStore()
 
   useLayoutEffect(() => {
-    setLoading(true)
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-  }, [setLoading])
+    if (searchQuery !== searchContent) {
+      setLoading(true)
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+  }, [searchContent, searchQuery, setLoading])
 
   useEffect(() => {
-    const getResults = async () => {
-      const response = await api.getBySearch(searchQuery)
-      setListResult(response.results)
+    if (searchQuery !== searchContent) {
+      const getResults = async () => {
+        const response = await api.getBySearch(searchQuery)
+        setListResult(response.results)
+        setSearchContent(searchQuery)
+      }
+      getResults()
     }
-    getResults()
-  }, [searchQuery, setListResult, setLoading])
+  }, [searchContent, searchQuery, setListResult, setSearchContent])
 
   return (
     <div className="results-page mb-60 flex min-h-[928px] w-full justify-center">

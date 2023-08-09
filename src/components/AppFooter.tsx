@@ -13,7 +13,7 @@ export function AppFooter(props: IFooterProps) {
   return (
     <Footer
       className={
-        'app-footer z-40 flex justify-center px-0 py-2 text-white ' +
+        'app-footer z-30 flex justify-center px-0 py-2 text-white ' +
         lato.className
       }
     >
