@@ -18,11 +18,11 @@ export function MobileFooter() {
       icon: (
         <>
           <div
-            className="icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/home.svg')` }}
           ></div>
           <div
-            className="active-icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/home-active.svg')` }}
           ></div>
         </>
@@ -34,11 +34,11 @@ export function MobileFooter() {
       icon: (
         <>
           <div
-            className="icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/tv.svg')` }}
           ></div>
           <div
-            className="active-icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/tv-active.svg')` }}
           ></div>
         </>
@@ -50,11 +50,11 @@ export function MobileFooter() {
       icon: (
         <>
           <div
-            className="icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/movie.svg')` }}
           ></div>
           <div
-            className="active-icon w-6 h-6 bg-center bg-no-repeat bg-cover"
+            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/icons/movie-active.svg')` }}
           ></div>
         </>
@@ -66,9 +66,9 @@ export function MobileFooter() {
     console.log('click ', e)
     setCurrent(e.key)
   }
- 
+
   return (
-    <Footer className="mobile-footer fixed bottom-0 inset-x-0 p-0 md:hidden">
+    <Footer className="mobile-footer fixed inset-x-0 bottom-0 z-50 p-0 md:hidden">
       <Menu
         className="mobile__nav-menu"
         onClick={onClick}

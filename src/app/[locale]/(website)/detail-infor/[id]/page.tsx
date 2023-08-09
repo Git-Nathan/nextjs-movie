@@ -1,14 +1,16 @@
 'use client'
 
 import { api } from '@/api'
+import { getSimilalMovies } from '@/api/api'
 import { AppSpin } from '@/common/AppSpin'
+import { MovieBoxs } from '@/components/MovieBoxs'
 import { workSans } from '@/fonts'
-import { IMovieDetail } from '@/interface'
+import { IMovieBox, IMovieDetail } from '@/interface'
 import { getImageUrl } from '@/utils/functions'
 import { Button } from 'antd'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 export default function DetailPage({ params }: { params: { id: string } }) {
   const t = useTranslations('Detail')
@@ -17,8 +19,13 @@ export default function DetailPage({ params }: { params: { id: string } }) {
   const [detail, setDetail] = useState<IMovieDetail>({} as IMovieDetail)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLoading(true)
+  }, [])
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+
     const getData = async () => {
       const response = await api.getMovieById(params.id)
       console.log(response)
@@ -27,13 +34,30 @@ export default function DetailPage({ params }: { params: { id: string } }) {
     }
     getData()
   }, [params.id])
+  // ListSimilar
+  const [listSimilar, setListSimilar] = useState<IMovieBox[]>([])
+  const [loadingSimilar, setLoadingSimilar] = useState(true)
 
+  useLayoutEffect(() => {
+    setLoadingSimilar(true)
+  }, [])
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await getSimilalMovies(params.id)
+      setListSimilar(response.results)
+      setLoadingSimilar(false)
+    }
+    getData()
+  }, [params.id])
+
+  // Render
   const renderGenders = detail.genres?.map((item) => item.name).join(', ')
 
   if (loading) return <AppSpin />
 
   return (
-    <div className="detail-page relative flex w-full justify-center">
+    <div className="detail-page relative mb-40 flex w-full justify-center">
       <div
         className="absolute inset-x-0 top-0 z-0 aspect-[1440/980] w-full bg-cover bg-center bg-no-repeat"
         style={{
@@ -113,7 +137,9 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           </p>
         </div>
         <div className="mt-10 md:mt-[108px]">{t('Similar')}</div>
-        <div></div>
+        <div className="mt-4 grid min-h-[604px] grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <MovieBoxs data={listSimilar} loading={loadingSimilar} />
+        </div>
       </div>
     </div>
   )

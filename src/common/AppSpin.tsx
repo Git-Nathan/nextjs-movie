@@ -5,9 +5,9 @@ export interface IAppSpin {}
 export function AppSpin(props: IAppSpin) {
   return (
     <div
-      className="w-full flex justify-center"
+      className="flex w-full justify-center"
       style={{
-        margin: '35vh 0 40vh',
+        margin: '35vh 0 60vh',
       }}
     >
       <Spin />

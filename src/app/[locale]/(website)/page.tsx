@@ -1,21 +1,21 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import * as React from 'react'
 import { Button, Modal } from 'antd'
 import { useTranslations } from 'next-intl'
+import { useRouter } from 'next/navigation'
+import * as React from 'react'
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules'
 
 // Import Swiper styles
+import { API_PATHS } from '@/configs/api'
+import { fetchApi } from '@/configs/fetchApi'
+import { useStore } from '@/store/store'
+import { APIHost } from '@/utils/contants'
 import 'swiper/css'
 import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { useStore } from '@/store/store'
-import { fetchApi } from '@/configs/fetchApi'
-import { API_PATHS } from '@/configs/api'
-import { APIHost } from '@/utils/contants'
 
 export default function Home() {
   const t = useTranslations('HomePage')
@@ -90,7 +90,7 @@ export default function Home() {
         {dataTrendingAll.map((item: any) => (
           <SwiperSlide
             key={item.id}
-            className={`swiper relative aspect-[1440/980] w-full bg-center bg-cover bg-no-repeat bg-[]`}
+            className={`swiper relative aspect-[1440/980] w-full bg-[] bg-cover bg-center bg-no-repeat`}
             style={{
               backgroundImage: `linear-gradient(202deg,rgba(26, 29, 41, 0) 0%,rgba(26, 29, 41, 0.79) 59.65%,#1a1d29 100%),
               url('https://image.tmdb.org/t/p/original/${item.backdrop_path}')`,
@@ -105,13 +105,13 @@ export default function Home() {
             >
               {item.title || item.name}
 
-              <h1 className="homepage__text-overview text-xl mt-5 mb-8">
+              <h1 className="homepage__text-overview mb-8 mt-5 text-xl">
                 {item.overview}
               </h1>
 
               <div className="flex">
                 <Button
-                  className="home__btn-watch text-base bg-white hover:bg-neutral-300  font-bold h-12 px-6 mr-6 flex items-center"
+                  className="home__btn-watch mr-6 flex h-12  items-center bg-white px-6 text-base font-bold hover:bg-neutral-300"
                   icon={<img src="/icons/icon-play.svg" />}
                   onClick={() => {
                     setSelectedItem(item)
@@ -121,7 +121,7 @@ export default function Home() {
                   {t('watch')}
                 </Button>
                 <Button
-                  className="home__btn-infor text-base bg-[rgba(0, 0, 0, 0.1)] hover:bg-neutral-400 hover:color-neutral700 text-neutral100 font-bold h-12 px-6 flex items-center"
+                  className="home__btn-infor bg-[rgba(0, 0, 0, 0.1)] hover:color-neutral700 flex h-12 items-center px-6 text-base font-bold text-neutral100 hover:bg-neutral-400"
                   icon={<img src="/icons/icon-infor.svg" />}
                   onClick={() => {
                     setSelectedID(item?.id, item?.media_type)
