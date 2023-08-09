@@ -2,10 +2,11 @@
 
 import { useRouter } from 'next/navigation'
 import * as React from 'react'
-import { Button, Modal } from 'antd'
+import { Button } from 'antd'
 import { useTranslations } from 'next-intl'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules'
+import { Autoplay, EffectFade, Pagination, Navigation, EffectCoverflow } from 'swiper/modules'
+import Image from "next/image"
 
 // Import Swiper styles
 import 'swiper/css'
@@ -13,9 +14,11 @@ import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { useStore } from '@/store/store'
-import { fetchApi } from '@/configs/fetchApi'
-import { API_PATHS } from '@/configs/api'
-import { APIHost } from '@/utils/contants'
+import BtnWatchTrailer from '@/common/BtnWatch'
+import { AppSpin } from '@/common/AppSpin'
+import { useEffect, useState } from 'react'
+import { api } from '@/api'
+import { getImageUrl } from '@/utils/functions'
 
 export default function Home() {
   const t = useTranslations('HomePage')
@@ -23,56 +26,34 @@ export default function Home() {
   const router = useRouter()
   const lang = 'en-US'
 
-  const [dataTrendingAll, setDataTrendingAll] = React.useState([])
+  const [loading, setLoading] = useState(true)
 
-  const fetchData = React.useCallback(
-    async (url: string, setData: React.Dispatch<any>) => {
-      try {
-        const res = await fetchApi(url, 'get')
-        setData(res.results)
-      } catch (error) {
-        console.log('Error!', error)
-      }
-    },
-    [lang],
-  )
+  const [dataTrendingAll, setDataTrendingAll] = useState([])
 
-  React.useEffect(() => {
-    fetchData(`${API_PATHS.trendingAll}?language=${lang}`, setDataTrendingAll)
-  }, [fetchData])
+  useEffect(() => {
+  setLoading(true)
+  const getData = async () => {
+    const response = await api.getTrendingAll()
+    setDataTrendingAll(response.results) 
+    setLoading(false)         
+  }
+  getData()
+}, [])
 
-  const handleClickInfor = (name: string) => {
-    let newName = name.split(' ').join('').toLowerCase()
-    router.push(`/detail-infor/${newName}`)
+  // const handleClickInfor = (name: string) => {
+  //   let newName = name.split(' ').join('').toLowerCase()
+  //   router.push(`/detail-infor/${newName}`)
+  // }
+
+  const handleClickInfor = (id: number) => {
+    router.push(`/detail-infor/${id}`)
   }
 
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
+  if (loading) return <AppSpin />
 
-  const handleClickWatch = () => {
-    // setVideoKey([]);
-    setIsModalOpen(true)
-  }
-
-  const [videoKey, setVideoKey] = React.useState<any>([])
-  const [selectedItem, setSelectedItem] = React.useState<any>()
-
-  const key = videoKey.find(
-    (item: any) => item.type === 'Teaser' || item.type === 'Trailer',
-  )
-
-  React.useEffect(() => {
-    if (selectedItem) {
-      fetchData(
-        `${APIHost}${selectedItem?.media_type}/${selectedItem?.id}/videos`,
-        setVideoKey,
-      )
-    }
-  }, [fetchData, selectedItem])
-
-  // console.log(key);
   return (
-    <>
-      <Swiper
+    <div className='my-6 mx-6'>
+      {/* <Swiper
         spaceBetween={20}
         effect={'fade'}
         centeredSlides={true}
@@ -87,12 +68,13 @@ export default function Home() {
         }}
         modules={[EffectFade, Autoplay, Pagination, Navigation]}
       >
-        {dataTrendingAll.map((item: any) => (
+        {dataTrendingAll.slice(0, 10).map((item: any) => (
           <SwiperSlide
             key={item.id}
             className={`swiper relative aspect-[1440/980] w-full bg-center bg-cover bg-no-repeat bg-[]`}
             style={{
               backgroundImage: `linear-gradient(202deg,rgba(26, 29, 41, 0) 0%,rgba(26, 29, 41, 0.79) 59.65%,#1a1d29 100%),
+              linear-gradient(180deg, rgba(26, 29, 41, 0.00) 0%, rgba(26, 29, 41, 0.79) 59.65%, #1A1D29 100%),
               url('https://image.tmdb.org/t/p/original/${item.backdrop_path}')`,
             }}
           >
@@ -110,22 +92,14 @@ export default function Home() {
               </h1>
 
               <div className="flex">
-                <Button
-                  className="home__btn-watch text-base bg-white hover:bg-neutral-300  font-bold h-12 px-6 mr-6 flex items-center"
-                  icon={<img src="/icons/icon-play.svg" />}
-                  onClick={() => {
-                    setSelectedItem(item)
-                    handleClickWatch()
-                  }}
-                >
-                  {t('watch')}
-                </Button>
+               <BtnWatchTrailer id={item?.id} media_type={item?.media_type} />
                 <Button
                   className="home__btn-infor text-base bg-[rgba(0, 0, 0, 0.1)] hover:bg-neutral-400 hover:color-neutral700 text-neutral100 font-bold h-12 px-6 flex items-center"
-                  icon={<img src="/icons/icon-infor.svg" />}
+                  icon={<Image alt="" width={24} height={24} src="/icons/icon-infor.svg" />}
                   onClick={() => {
                     setSelectedID(item?.id, item?.media_type)
-                    handleClickInfor(item?.title || item?.name)
+                    // handleClickInfor(item?.title || item?.name)
+                    handleClickInfor(item?.id)
                   }}
                 >
                   {t('infor')}
@@ -134,25 +108,71 @@ export default function Home() {
             </div>
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
 
-      <Modal
-        destroyOnClose
-        width={920}
-        centered
-        open={isModalOpen}
-        onOk={() => setIsModalOpen(true)}
-        onCancel={() => setIsModalOpen(false)}
-        footer={null}
+      <Swiper
+      className='slide-mobile'
+        effect={'coverflow'}
+        grabCursor={true}
+        centeredSlides={true}
+        slidesPerView={'auto'}
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }}
+        pagination={true}
+        spaceBetween={80}
+        loop={true}
+        navigation={true}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: true,
+        }}
+        modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
       >
-        <iframe
-          width="920"
-          height="550"
-          src={`https://www.youtube.com/embed/${key?.key}`}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        ></iframe>
-      </Modal>
-    </>
+        {dataTrendingAll.slice(0, 10).map((item: any) => (
+          <SwiperSlide
+            key={item.id}
+            // className='w-full'
+          >
+            <div className={`swiper relative aspect-[556/835] w-full bg-center bg-cover bg-no-repeat`}
+            style={{
+              backgroundImage: `url('${getImageUrl(item.poster_path)}')`,borderRadius: "5px"
+            }}>
+            </div>
+
+           <div className='flex justify-center w-full absolute z-10'>
+           <div
+              className={`homepage__text-banner absolute left-0 bottom-[-230px] text-lg w-full uppercase text-center`}
+            >
+              {item.title || item.name}
+
+              <h1 className="homepage__text-overview text-xs mt-5 mb-8">
+                {item.overview}
+              </h1>
+
+              <div className="flex">
+               <BtnWatchTrailer id={item?.id} media_type={item?.media_type} />
+                <Button
+                  className="home__btn-infor text-base bg-[rgba(0, 0, 0, 0.1)] hover:bg-neutral-400 hover:color-neutral700 text-neutral100 font-bold h-12 px-6 flex items-center"
+                  icon={<Image alt="" width={24} height={24} src="/icons/icon-infor.svg" />}
+                  onClick={() => {
+                    setSelectedID(item?.id, item?.media_type)
+                    // handleClickInfor(item?.title || item?.name)
+                    handleClickInfor(item?.id)
+                  }}
+                >
+                  {t('infor')}
+                </Button>
+              </div>
+            </div>
+           </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   )
 }

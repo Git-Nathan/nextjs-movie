@@ -3,7 +3,7 @@
 import { api } from '@/api'
 import { AppSpin } from '@/common/AppSpin'
 import { workSans } from '@/fonts'
-import { IMovieDetail } from '@/interface'
+import { IMediaDetail } from '@/interface'
 import { getImageUrl } from '@/utils/functions'
 import { Button } from 'antd'
 import { useTranslations } from 'next-intl'
@@ -14,9 +14,9 @@ export default function DetailPage({ params }: { params: { id: string } }) {
   const t = useTranslations('Detail')
 
   // Movie
-  const [detail, setDetail] = useState<IMovieDetail>({} as IMovieDetail)
+  const [detail, setDetail] = useState<IMediaDetail>({} as IMediaDetail)
   const [loading, setLoading] = useState(true)
-
+  
   useEffect(() => {
     setLoading(true)
     const getData = async () => {
