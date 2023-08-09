@@ -7,7 +7,7 @@ export function AppSpin(props: IAppSpin) {
     <div
       className="w-full flex justify-center"
       style={{
-        margin: '35vh 0 40vh',
+        margin: '35vh 0 60vh',
       }}
     >
       <Spin />

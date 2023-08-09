@@ -217,6 +217,10 @@ body {
   padding: 0 !important;
 }
 
+.ant-modal-body {
+ background-color:#101116;
+}
+
 .ant-popover {
   .ant-popover-arrow {
     top: 1px !important;
@@ -247,4 +251,10 @@ body {
   & button {
     display: none !important;
   }
+}
+
+.slide-mobile.swiper {
+  height: 680px;
+  overflow: auto !important;
+overflow-x: hidden !important;
 }

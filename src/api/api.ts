@@ -53,7 +53,8 @@ export const getRecommendTvShow = (id: string) => fetchApi('get', `/tv/${id}/rec
 
 // export const getVideoTrailer
 
+export const getVideoTrailer = (id: number, type : string) => fetchApi('get', `/${type}/${id}/videos`)
 
-export const getVideoTrailerMovies = (id: string) => fetchApi('get', `/movie/${id}/videos`)
+// export const getTrending
 
-export const getVideoTrailerTvShow = (id: string) => fetchApi('get', `/tv/${id}/videos`)
+export const getTrendingAll = () => fetchApi('get', `/trending/all/week`)

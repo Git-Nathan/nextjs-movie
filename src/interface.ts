@@ -10,10 +10,11 @@ export interface IGenres {
   name: string
 }
 
-export interface IMovieDetail {
+export interface IMediaDetail {
   id: number
   title: string
   backdrop_path: string
   overview: string
   genres: IGenres[]
+  media_type: string
 }
