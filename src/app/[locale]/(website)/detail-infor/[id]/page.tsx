@@ -20,7 +20,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     setLoading(true)
     const getData = async () => {
-      const response = await api.getById(params.id)
+      const response = await api.getMovieById(params.id)
       console.log(response)
       setDetail(response)
       setLoading(false)

@@ -33,6 +33,27 @@ export const getBySearch = (search_query: string) =>
     `/search/movie?` + new URLSearchParams({ query: search_query }),
   )
 
-export const getById = (id: string) => fetchApi('get', `/movie/${id}`)
+// export const getDetail
+
+export const getMovieById = (id: string) => fetchApi('get', `/movie/${id}`)
+
+export const getTvShowById = (id: string) => fetchApi('get', `/tv/${id}`)
 
 // export const getSimilal
+
+export const getSimilalMovies = (id: string) => fetchApi('get', `/movie/${id}/similar`)
+
+export const getSimilalTvShow = (id: string) => fetchApi('get', `/tv/${id}/similar`)
+
+// export const getRecommend
+
+export const getRecommendMovies = (id: string) => fetchApi('get', `/movie/${id}/recommendations`)
+
+export const getRecommendTvShow = (id: string) => fetchApi('get', `/tv/${id}/recommendations`)
+
+// export const getVideoTrailer
+
+
+export const getVideoTrailerMovies = (id: string) => fetchApi('get', `/movie/${id}/videos`)
+
+export const getVideoTrailerTvShow = (id: string) => fetchApi('get', `/tv/${id}/videos`)
