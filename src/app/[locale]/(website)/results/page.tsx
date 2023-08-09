@@ -5,7 +5,7 @@ import { MovieBoxs } from '@/components/MovieBoxs'
 import { useResultStore } from '@/store/resultsStore'
 import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 
 export default function ResultPage() {
   // Get search_query
@@ -16,8 +16,12 @@ export default function ResultPage() {
   // Results
   const { listResult, loading, setListResult, setLoading } = useResultStore()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLoading(true)
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [setLoading])
+
+  useEffect(() => {
     const getResults = async () => {
       const response = await api.getBySearch(searchQuery)
       setListResult(response.results)
