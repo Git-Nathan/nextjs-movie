@@ -25,7 +25,7 @@ export function LanguageButton(props: ILanguageButton) {
               alt="icon-english"
             ></Image>
           </Link>
-          <Link href="/" locale="vn">
+          <Link href="/" locale="vi">
             <Image
               className="mt-2 h-6 w-6"
               src={'/icons/vietnamese.svg'}

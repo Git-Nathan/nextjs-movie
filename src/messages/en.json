@@ -3,7 +3,8 @@
     "title": "Hello world!",
     "search": "Search",
     "email": "Email",
-    "continue": "Continue"
+    "continue": "Continue",
+    "Clear": "Clear"
   },
   "Menu": {
     "home": "Home",

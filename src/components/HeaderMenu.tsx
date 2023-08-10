@@ -1,80 +1,39 @@
 'use client'
 
-import * as React from 'react'
-import { Menu, type MenuProps } from 'antd'
+import { HomeIcon, MovieIcon, TvIcon } from '@/assets/icons'
+import { NavLink } from '@/common/NavLink'
+import { appRouter } from '@/configs'
 import { useTranslations } from 'next-intl'
 
 export function HeaderMenu() {
   const t = useTranslations('Menu')
 
-  // Menu
-  const [current, setCurrent] = React.useState('home')
-
-  const items: MenuProps['items'] = [
-    {
-      label: t('home'),
-      key: 'home',
-      icon: (
-        <>
-          <div
-            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/home.svg')` }}
-          ></div>
-          <div
-            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/home-active.svg')` }}
-          ></div>
-        </>
-      ),
-    },
-    {
-      label: t('series'),
-      key: 'series',
-      icon: (
-        <>
-          <div
-            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/tv.svg')` }}
-          ></div>
-          <div
-            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/tv-active.svg')` }}
-          ></div>
-        </>
-      ),
-    },
-    {
-      label: t('films'),
-      key: 'films',
-      icon: (
-        <>
-          <div
-            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/movie.svg')` }}
-          ></div>
-          <div
-            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/movie-active.svg')` }}
-          ></div>
-        </>
-      ),
-    },
-  ]
-
-  const onClick: MenuProps['onClick'] = (e) => {
-    // console.log("click ", e);
-    setCurrent(e.key)
-  }
-
   return (
-    <div className="hidden md:block">
-      <Menu
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={items}
-        disabledOverflow
-      />
+    <div className="hidden items-center md:flex">
+      <NavLink
+        className="flex items-center px-4 py-2 text-base text-white hover:!text-text_link"
+        href={appRouter.home}
+        exact
+      >
+        <HomeIcon />
+        <p className="ml-2">{t('home')}</p>
+      </NavLink>
+      <NavLink
+        className="flex items-center px-4 py-2 text-base text-white hover:!text-text_link"
+        href={appRouter.series.index}
+        exact
+      >
+        <TvIcon />
+        <p className="ml-2">{t('series')}</p>
+      </NavLink>
+      <NavLink
+        className="flex items-center px-4 py-2 text-base text-white hover:!text-text_link"
+        href={appRouter.films.index}
+        exact
+      >
+        <MovieIcon />
+        <p className="ml-2">{t('films')}</p>
+      </NavLink>
     </div>
   )
 }

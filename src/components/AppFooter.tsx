@@ -23,6 +23,7 @@ export function AppFooter(props: IFooterProps) {
           width={92}
           height={56}
           src="/icons/logo.svg"
+          priority
           alt="footer-logo"
         />
         <div className="mt-8 flex flex-wrap justify-center">

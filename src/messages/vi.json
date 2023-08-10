@@ -3,7 +3,8 @@
     "title": "Chào thế giới!",
     "search": "Tìm kiếm",
     "email": "Email",
-    "continue": "Tiếp tục"
+    "continue": "Tiếp tục",
+    "Clear": "Xóa"
   },
   "Menu": {
     "home": "Trang chủ",
@@ -24,7 +25,7 @@
     "page-info": "Disney+ là dịch vụ đăng ký trả phí, nội dung tùy thuộc vào tình trạng có sẵn. Dịch vụ Disney+ được tiếp thị bởi Disney DTC LATAM, Inc., 2400 W Alameda AVE., Burbank CA 91521.",
     "guide": "Hướng dẫn"
   },
-  "account": {
+  "Account": {
     "title": "Đăng nhập bằng email của bạn",
     "first-time": "¿Lần đầu đến Disney+?",
     "subscribe": "Đăng ký",
