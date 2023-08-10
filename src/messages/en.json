@@ -11,6 +11,10 @@
     "series": "Series",
     "films": "Films"
   },
+  "Button": {
+    "watch": "Watch Trailer",
+    "infor": "Information Detail"
+  },
   "HomePage": {
     "watch": "Watch Trailer",
     "infor": "Information Detail"
