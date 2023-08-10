@@ -59,7 +59,7 @@ export default function ResultPage() {
       setLoadingSimilar(false)
     }
     getData()
-  }, [])
+  }, [locale])
 
   return (
     <div className="results-page mb-60 flex min-h-[928px] w-full justify-center">
