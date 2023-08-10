@@ -40,11 +40,6 @@ export default function Home() {
   getData()
 }, [])
 
-  // const handleClickInfor = (name: string) => {
-  //   let newName = name.split(' ').join('').toLowerCase()
-  //   router.push(`/detail-infor/${newName}`)
-  // }
-
   const handleClickInfor = (id: number) => {
     router.push(`/detail-infor/${id}`)
   }
@@ -52,15 +47,13 @@ export default function Home() {
   if (loading) return <AppSpin />
 
   return (
-    <div className='my-6 mx-6'>
-      {/* <Swiper
+    <div className='my-6 mx-6 sm:mt-0 sm:mb-8 sm:mx-0'>
+      <Swiper
+      className='slide-desktop'
         spaceBetween={20}
         effect={'fade'}
         centeredSlides={true}
         loop={true}
-        pagination={{
-          clickable: true,
-        }}
         navigation={true}
         autoplay={{
           delay: 5000,
@@ -79,26 +72,25 @@ export default function Home() {
             }}
           >
             <div
-              className={`homepage__text-banner absolute left-20 ${
+              className={`homepage__text-banner absolute left-[5%] ${
                 item?.overview?.length > 100 ? 'top-[40%]' : 'top-[45%]'
               } ${
-                item?.title?.length < 12 ? 'text-8xl' : 'text-5xl'
-              } max-w-3xl uppercase`}
+                item?.title?.length < 15 ? 'text-3xl sm:text-4xl md:text-5xl' : 'text-xl lg:text-3xl'
+              } uppercase max-w-md md:max-w-xl lg:max-w-3xl`}
             >
               {item.title || item.name}
 
-              <h1 className="homepage__text-overview text-xl mt-5 mb-8">
+              <h1 className="homepage__text-overview text-base md:text-lg lg:text-xl mt-5 mb-8 capitalize">
                 {item.overview}
               </h1>
 
               <div className="flex">
                <BtnWatchTrailer id={item?.id} media_type={item?.media_type} />
                 <Button
-                  className="home__btn-infor text-base bg-[rgba(0, 0, 0, 0.1)] hover:bg-neutral-400 hover:color-neutral700 text-neutral100 font-bold h-12 px-6 flex items-center"
+                  className="home__btn-infor ml-4 text-base bg-[rgba(0, 0, 0, 0.1)] hover:bg-neutral-400 hover:color-neutral700 text-neutral100 font-bold h-12 px-6 flex items-center"
                   icon={<Image alt="" width={24} height={24} src="/icons/icon-infor.svg" />}
                   onClick={() => {
                     setSelectedID(item?.id, item?.media_type)
-                    // handleClickInfor(item?.title || item?.name)
                     handleClickInfor(item?.id)
                   }}
                 >
@@ -108,10 +100,10 @@ export default function Home() {
             </div>
           </SwiperSlide>
         ))}
-      </Swiper> */}
+      </Swiper>
 
       <Swiper
-      className='slide-mobile'
+        className='slide-mobile'
         effect={'coverflow'}
         grabCursor={true}
         centeredSlides={true}
@@ -123,10 +115,8 @@ export default function Home() {
           modifier: 1,
           slideShadows: true,
         }}
-        pagination={true}
         spaceBetween={80}
         loop={true}
-        navigation={true}
         autoplay={{
           delay: 5000,
           disableOnInteraction: true,
@@ -136,7 +126,6 @@ export default function Home() {
         {dataTrendingAll.slice(0, 10).map((item: any) => (
           <SwiperSlide
             key={item.id}
-            // className='w-full'
           >
             <div className={`swiper relative aspect-[556/835] w-full bg-center bg-cover bg-no-repeat`}
             style={{
@@ -146,22 +135,23 @@ export default function Home() {
 
            <div className='flex justify-center w-full absolute z-10'>
            <div
-              className={`homepage__text-banner absolute left-0 bottom-[-230px] text-lg w-full uppercase text-center`}
+              className={`homepage__text-banner absolute left-0 bottom-[-79vw] bp-425:bottom-[-65vw] xs:bottom-[-55vw]
+              ${item?.title?.length > 15 || item?.name?.length > 15 ? "text-sm bp-375:text-xl" : "text-xl bp-375:text-2xl"}
+              w-full uppercase text-center`}
             >
               {item.title || item.name}
 
-              <h1 className="homepage__text-overview text-xs mt-5 mb-8">
+              <h1 className="homepage__text-overview text-xs bp-375:text-base mt-4 mb-8 capitalize">
                 {item.overview}
               </h1>
 
-              <div className="flex">
+              <div className="flex flex-wrap flex-col sm:flex-row">
                <BtnWatchTrailer id={item?.id} media_type={item?.media_type} />
                 <Button
-                  className="home__btn-infor text-base bg-[rgba(0, 0, 0, 0.1)] hover:bg-neutral-400 hover:color-neutral700 text-neutral100 font-bold h-12 px-6 flex items-center"
+                  className="home__btn-infor justify-center mt-3 flex-1 text-base bg-[rgba(0, 0, 0, 0.1)] hover:bg-neutral-400 hover:color-neutral700 text-neutral100 font-bold h-12 px-6 flex items-center"
                   icon={<Image alt="" width={24} height={24} src="/icons/icon-infor.svg" />}
                   onClick={() => {
                     setSelectedID(item?.id, item?.media_type)
-                    // handleClickInfor(item?.title || item?.name)
                     handleClickInfor(item?.id)
                   }}
                 >
@@ -173,6 +163,24 @@ export default function Home() {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      <div className='flex flex-wrap gap-2 flex-row bp-425:mt-6 md:mt-0 justify-between mx-[5%]'>
+        <Image alt='' width={200} height={100}
+        className='rounded-lg w-full aspect-[1.7] flex-1 max-w-[125px] sm:max-w-[145px] md:max-w-[236px] min-w-[90px] max-h-14 sm:!max-h-[133px] border border-solid border-gray-700 bg-opacity-3 backdrop-blur-md p-1 bg-cover bg-center bg-no-repeat' 
+              src="/images/avt-disney.png"></Image>
+       <Image alt='' width={200} height={100}
+        className='rounded-lg w-full aspect-[1.7] flex-1 max-w-[125px] sm:max-w-[145px] md:max-w-[236px] min-w-[90px] max-h-14 sm:!max-h-[133px] border border-solid border-gray-700 bg-opacity-3 backdrop-blur-md p-1 bg-cover bg-center bg-no-repeat'  
+        src="/images/avt-pixar.png"></Image>
+               <Image alt='' width={200} height={100}
+        className='rounded-lg w-full aspect-[1.7] flex-1 max-w-[125px] sm:max-w-[145px] md:max-w-[236px] min-w-[90px] max-h-14 sm:!max-h-[133px] border border-solid border-gray-700 bg-opacity-3 backdrop-blur-md p-1 bg-cover bg-center bg-no-repeat' 
+         src="/images/avt-marvel.png"></Image>
+               <Image alt='' width={200} height={100}
+        className='rounded-lg w-full aspect-[1.7] flex-1 max-w-[125px] sm:max-w-[145px] md:max-w-[236px] min-w-[90px] max-h-14 sm:!max-h-[133px] border border-solid border-gray-700 bg-opacity-3 backdrop-blur-md p-1 bg-cover bg-center bg-no-repeat'  
+        src="/images/avt-starWars.png"></Image>
+               <Image alt='' width={200} height={100}
+        className='rounded-lg w-full aspect-[1.7] flex-1 max-w-[125px] sm:max-w-[145px] md:max-w-[236px] min-w-[90px] max-h-14 sm:!max-h-[133px] border border-solid border-gray-700 bg-opacity-3 backdrop-blur-md p-1 bg-cover bg-center bg-no-repeat'  
+        src="/images/avt-nationalGeographic.png"></Image>
+      </div>
     </div>
   )
 }
