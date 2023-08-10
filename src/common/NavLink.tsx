@@ -18,17 +18,18 @@ export function NavLink({
 }: INavLink) {
   const pathname = usePathname()
   const locale = useLocale()
-
-  if (locale !== 'en') {
-    href = `/` + locale + href
-  }
-
-  let isActive = false
-
-  isActive = exact ? pathname === href : pathname.startsWith(href)
-
+  let linkPath = href
   let classes = `nav-link ${className}`
 
+  // Check locale
+  if (locale !== 'en') {
+    if (linkPath === '/') linkPath = ''
+    linkPath = `/` + locale + linkPath
+  }
+
+  //Check active
+  let isActive = false
+  isActive = exact ? pathname === linkPath : pathname.startsWith(linkPath)
   if (isActive) {
     classes += ' active'
   }

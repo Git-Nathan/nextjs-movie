@@ -1,11 +1,13 @@
 'use client'
 
 import { api } from '@/api'
+import { getTrendingAll } from '@/api/api'
 import { MovieBoxs } from '@/components/MovieBoxs'
+import { IMovieBox } from '@/interface'
 import { useResultStore } from '@/store/resultsStore'
 import { useLocale, useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 export default function ResultPage() {
   // Get search_query
@@ -42,6 +44,23 @@ export default function ResultPage() {
     }
   }, [locale, searchContent, searchQuery, setListResult, setSearchContent])
 
+  // Recommend
+  const [listSimilar, setListSimilar] = useState<IMovieBox[]>([])
+  const [loadingSimilar, setLoadingSimilar] = useState(true)
+
+  useLayoutEffect(() => {
+    setLoadingSimilar(true)
+  }, [])
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await getTrendingAll()
+      setListSimilar(response.results)
+      setLoadingSimilar(false)
+    }
+    getData()
+  }, [])
+
   return (
     <div className="results-page mb-60 flex min-h-[928px] w-full justify-center">
       <div className="flex w-11/12 max-w-[1280px] flex-col">
@@ -55,14 +74,14 @@ export default function ResultPage() {
             {t('No results found')}!
           </div>
         )}
-        <div className="mt-4 grid min-h-[604px] grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="mt-4 grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           <MovieBoxs data={listResult} loading={loading} />
         </div>
         <div className="mt-4 text-lg text-[rgba(255,255,255,0.60)] md:mt-12 md:text-2xl">
           <b className="text-white">{t('We recommend these similar titles')}</b>
         </div>
-        <div className="mt-4 grid min-h-[604px] grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          <MovieBoxs data={listResult} loading={loading} />
+        <div className="mt-4 grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <MovieBoxs data={listSimilar} loading={loadingSimilar} />
         </div>
       </div>
     </div>

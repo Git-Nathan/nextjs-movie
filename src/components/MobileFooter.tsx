@@ -1,82 +1,44 @@
 'use client'
 
-import { Menu, MenuProps } from 'antd'
+import { HomeIcon, MovieIcon, TvIcon } from '@/assets/icons'
+import { NavLink } from '@/common/NavLink'
+import { appRouter } from '@/configs'
+import { workSans } from '@/fonts'
 import { Footer } from 'antd/es/layout/layout'
 import { useTranslations } from 'next-intl'
-import * as React from 'react'
 
 export function MobileFooter() {
   const t = useTranslations('Menu')
 
-  // Menu
-  const [current, setCurrent] = React.useState('home')
-
-  const items: MenuProps['items'] = [
-    {
-      label: t('home'),
-      key: 'home',
-      icon: (
-        <>
-          <div
-            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/home.svg')` }}
-          ></div>
-          <div
-            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/home-active.svg')` }}
-          ></div>
-        </>
-      ),
-    },
-    {
-      label: t('series'),
-      key: 'series',
-      icon: (
-        <>
-          <div
-            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/tv.svg')` }}
-          ></div>
-          <div
-            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/tv-active.svg')` }}
-          ></div>
-        </>
-      ),
-    },
-    {
-      label: t('films'),
-      key: 'films',
-      icon: (
-        <>
-          <div
-            className="icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/movie.svg')` }}
-          ></div>
-          <div
-            className="active-icon h-6 w-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/icons/movie-active.svg')` }}
-          ></div>
-        </>
-      ),
-    },
-  ]
-
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e)
-    setCurrent(e.key)
-  }
-
   return (
-    <Footer className="mobile-footer fixed inset-x-0 bottom-0 z-50 p-0 md:hidden">
-      <Menu
-        className="mobile__nav-menu"
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={items}
-        disabledOverflow
-      />
+    <Footer
+      className={
+        'mobile-footer fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 items-center p-0 lg:hidden ' +
+        workSans.className
+      }
+    >
+      <NavLink
+        className="flex flex-col items-center px-4 text-base text-white hover:!text-text_link"
+        href={appRouter.home}
+        exact
+      >
+        <HomeIcon />
+        <p className="w-full truncate text-center">{t('home')}</p>
+      </NavLink>
+      <NavLink
+        className="flex flex-col items-center px-4 text-base text-white hover:!text-text_link"
+        href={appRouter.series.index}
+      >
+        <TvIcon />
+        <p className="w-full truncate text-center">{t('series')}</p>
+      </NavLink>
+      <NavLink
+        className="flex flex-col items-center px-4 text-base text-white hover:!text-text_link"
+        href={appRouter.films.index}
+      >
+        <MovieIcon />
+        <p className="w-full truncate text-center">{t('films')}</p>
+      </NavLink>
     </Footer>
   )
 }
