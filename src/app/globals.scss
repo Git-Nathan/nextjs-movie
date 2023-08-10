@@ -197,6 +197,10 @@ body {
       border-color: var(--neutral-200);
     }
   }
+
+  @media (min-width:576px) {
+    max-width: 195px;
+  }
 }
 
 .ant-form-item {
@@ -258,10 +262,27 @@ body {
   }
 }
 
+.slide-desktop {
+  display: none !important;
+   @media (min-width: 576px) {
+    display: block !important;
+   }
+}
+
+.slide-mobile {
+   @media (min-width: 576px) {
+    display: none !important;
+   }
+}
+
 .slide-mobile.swiper {
-  height: 680px;
+  height: 218vw;
   overflow: auto !important;
   overflow-x: hidden !important;
+  
+  @media (min-width: 415px) {
+    height: 200vw;
+   }
 }
 
 .movie-box {
@@ -279,4 +300,15 @@ body {
       pointer-events: all;
     }
   }
+}
+
+
+
+.ant-modal {
+  width: 90% !important;
+}
+
+iframe {
+  width: 100%;
+  aspect-ratio: 1.67 !important;
 }

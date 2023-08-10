@@ -33,7 +33,7 @@ export default function BtnWatchTrailer (props: IBtnWatch) {
   return (
     <>
     <Button
-      className="home__btn-watch text-base bg-white hover:bg-neutral-300  font-bold h-12 px-6 mr-6 flex items-center"
+      className="home__btn-watch flex-1 justify-center text-base bg-white hover:bg-neutral-300 font-bold h-12 px-6  flex items-center"
       icon={<Image alt="" width={24} height={24} src="/icons/icon-play.svg" />}
       onClick={() => setIsModalOpen(true)}
     >
@@ -42,7 +42,6 @@ export default function BtnWatchTrailer (props: IBtnWatch) {
   
     <Modal
       destroyOnClose
-      width={920}
       centered
       open={isModalOpen}
       onOk={() => setIsModalOpen(true)}
@@ -50,8 +49,6 @@ export default function BtnWatchTrailer (props: IBtnWatch) {
       footer={null}
     >
       <iframe
-        width="920"
-        height="550"
        src={`https://www.youtube.com/embed/${keyTrailer?.key}`}
        allow="autoplay; encrypted-media"
        allowFullScreen
