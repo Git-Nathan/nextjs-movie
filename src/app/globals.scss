@@ -173,7 +173,7 @@ body {
   &:hover {
     color: white !important;
   }
-  
+
   &.home__btn-infor.ant-btn-default {
     &:not(:disabled):not(.ant-btn-disabled):hover {
       color: var(--neutral-600) !important;
@@ -187,9 +187,9 @@ body {
       border-color: var(--neutral-200) !important;
     }
 
-  @media (min-width: 576px) {
-    max-width: 195px;
-  }
+    @media (min-width: 576px) {
+      max-width: 195px;
+    }
   }
 }
 
@@ -312,9 +312,8 @@ iframe {
 
 .swiperExtra.swiper {
   overflow: initial !important;
-  overflow-y: hidden !important;
 }
 
 .swiperExtra .swiper-slide {
-  z-index: 5;;
+  z-index: 5;
 }

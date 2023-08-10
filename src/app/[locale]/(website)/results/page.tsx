@@ -54,7 +54,7 @@ export default function ResultPage() {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await getTrendingAll()
+      const response = await getTrendingAll(locale)
       setListSimilar(response.results)
       setLoadingSimilar(false)
     }

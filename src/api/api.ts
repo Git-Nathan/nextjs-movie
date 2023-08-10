@@ -70,21 +70,36 @@ export const getVideoTrailer = (id: number, type: string) =>
 
 // export const getTrending
 
-export const getTrendingAll = ( locale: string) => fetchApi('get', `/trending/all/week?`+ new URLSearchParams({ language: locale }),
-)
+export const getTrendingAll = (locale: string) =>
+  fetchApi(
+    'get',
+    `/trending/all/week?` + new URLSearchParams({ language: locale }),
+  )
 
-export const getTrendingMovie = ( locale: string) => fetchApi('get', `/trending/movie/week?`+ new URLSearchParams({ language: locale }),
-)
+export const getTrendingMovie = (locale: string) =>
+  fetchApi(
+    'get',
+    `/trending/movie/week?` + new URLSearchParams({ language: locale }),
+  )
 
-export const getTrendingTv = ( locale: string) => fetchApi('get', `/trending/tv/week?`+ new URLSearchParams({ language: locale }),
-)
+export const getTrendingTv = (locale: string) =>
+  fetchApi(
+    'get',
+    `/trending/tv/week?` + new URLSearchParams({ language: locale }),
+  )
 
 // export const getTopated
 
-export const getRopRated = ( locale: string) => fetchApi('get', `/movie/top_rated?`+ new URLSearchParams({ language: locale }),
-)
+export const getRopRated = (locale: string) =>
+  fetchApi(
+    'get',
+    `/movie/top_rated?` + new URLSearchParams({ language: locale }),
+  )
 
 // export const getUpcoming
 
-export const getUpcoming = ( locale: string) => fetchApi('get', `/movie/upcoming?`+ new URLSearchParams({ language: locale }),
-)
+export const getUpcoming = (locale: string) =>
+  fetchApi(
+    'get',
+    `/movie/upcoming?` + new URLSearchParams({ language: locale }),
+  )

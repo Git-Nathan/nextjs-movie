@@ -1,21 +1,30 @@
-"use client"
+'use client'
 
-import { AppSpin } from "@/common/AppSpin"
-import { BtnWatchTrailer } from "@/common/BtnWatch"
-import { useStore } from "@/store/store"
-import { getImageUrl } from "@/utils/functions"
-import { Button } from "antd"
-import { useLocale, useTranslations } from "next-intl"
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from "react"
-import { Autoplay, EffectCoverflow, EffectFade, Navigation, Pagination } from "swiper/modules"
-import { Swiper, SwiperSlide } from "swiper/react"
+import { api } from '@/api'
+import { GroupIcon, InfoIcon, PlayIcon, PlusIcon } from '@/assets/icons'
+import { AppSpin } from '@/common/AppSpin'
+import { BtnWatchTrailer } from '@/common/BtnWatch'
+import { appRouter } from '@/configs'
+import { useStore } from '@/store/store'
+import { getImageUrl } from '@/utils/functions'
+import { Button, Popover } from 'antd'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { api } from "@/api"
+import {
+  Autoplay,
+  EffectCoverflow,
+  EffectFade,
+  Navigation,
+  Pagination,
+} from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 export default function SeriesPage() {
   const t = useTranslations('HomePage')
@@ -38,13 +47,13 @@ export default function SeriesPage() {
   }, [locale])
 
   const handleClickInfor = (id: number, type: string) => {
-    router.push(`/detail-infor/${id}?` + new URLSearchParams({media: type}))
+    router.push(`/detail-infor/${id}?` + new URLSearchParams({ media: type }))
   }
 
   if (loading) return <AppSpin />
 
   return (
-    <div className="mx-6 mt-16 mb-6 sm:mx-0 sm:mb-8 sm:mt-0">
+    <div className="mx-6 mt-16 overflow-hidden pb-40 sm:mx-0 sm:mt-0">
       <Swiper
         className="slide-desktop"
         spaceBetween={20}
@@ -184,42 +193,119 @@ export default function SeriesPage() {
         ))}
       </Swiper>
 
-      <div className="mx-[5%] flex flex-row flex-wrap justify-between gap-2 bp-425:mt-6 md:mt-0">
-        <Image
-          alt=""
-          width={200}
-          height={100}
-          className="bg-opacity-3 aspect-[1.7] max-h-14 w-full min-w-[90px] max-w-[125px] flex-1 rounded-lg border border-solid border-gray-700 bg-cover bg-center bg-no-repeat p-1 backdrop-blur-md sm:!max-h-[133px] sm:max-w-[145px] md:max-w-[236px]"
-          src="/images/avt-disney.png"
-        ></Image>
-        <Image
-          alt=""
-          width={200}
-          height={100}
-          className="bg-opacity-3 aspect-[1.7] max-h-14 w-full min-w-[90px] max-w-[125px] flex-1 rounded-lg border border-solid border-gray-700 bg-cover bg-center bg-no-repeat p-1 backdrop-blur-md sm:!max-h-[133px] sm:max-w-[145px] md:max-w-[236px]"
-          src="/images/avt-pixar.png"
-        ></Image>
-        <Image
-          alt=""
-          width={200}
-          height={100}
-          className="bg-opacity-3 aspect-[1.7] max-h-14 w-full min-w-[90px] max-w-[125px] flex-1 rounded-lg border border-solid border-gray-700 bg-cover bg-center bg-no-repeat p-1 backdrop-blur-md sm:!max-h-[133px] sm:max-w-[145px] md:max-w-[236px]"
-          src="/images/avt-marvel.png"
-        ></Image>
-        <Image
-          alt=""
-          width={200}
-          height={100}
-          className="bg-opacity-3 aspect-[1.7] max-h-14 w-full min-w-[90px] max-w-[125px] flex-1 rounded-lg border border-solid border-gray-700 bg-cover bg-center bg-no-repeat p-1 backdrop-blur-md sm:!max-h-[133px] sm:max-w-[145px] md:max-w-[236px]"
-          src="/images/avt-starWars.png"
-        ></Image>
-        <Image
-          alt=""
-          width={200}
-          height={100}
-          className="bg-opacity-3 aspect-[1.7] max-h-14 w-full min-w-[90px] max-w-[125px] flex-1 rounded-lg border border-solid border-gray-700 bg-cover bg-center bg-no-repeat p-1 backdrop-blur-md sm:!max-h-[133px] sm:max-w-[145px] md:max-w-[236px]"
-          src="/images/avt-nationalGeographic.png"
-        ></Image>
+      <div className="mx-[5%] text-xl font-bold text-white">
+        {t('upcoming')}
+        <Swiper
+          slidesPerView={1}
+          breakpoints={{
+            480: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 20,
+            },
+            992: {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
+            1200: {
+              slidesPerView: 5,
+              spaceBetween: 20,
+            },
+          }}
+          spaceBetween={5}
+          className="swiperExtra mt-3"
+        >
+          {dataTrendingMovie.slice(0, 10).map((item: any) => (
+            <SwiperSlide key={item.id}>
+              <div className="movie-box relative z-10 flex aspect-[240/136] w-full flex-col">
+                <Popover
+                  content={
+                    <div className="movie-card absolute left-1/2 top-1/2 z-10 flex h-[363px] w-[92vw] max-w-[329px] -translate-x-1/2 -translate-y-24 flex-col overflow-hidden rounded-lg border border-solid border-[#353843] bg-neutral600 shadow-[0px_4px_15px_0px_rgba(255,255,255,0.10)]">
+                      <div
+                        className="movie-card__top flex h-[179px] w-[329px] items-end justify-center bg-[cover] bg-no-repeat"
+                        style={{
+                          backgroundImage: `url('${getImageUrl(
+                            item.backdrop_path,
+                          )}')`,
+                        }}
+                      >
+                        <div
+                          className="h-[169px] w-[331px] translate-y-px bg-[cover] bg-no-repeat"
+                          style={{
+                            backgroundImage: `linear-gradient(180deg, rgba(16, 17, 22, 0.00) 0%, #1A1D29 100%)`,
+                          }}
+                        ></div>
+                      </div>
+                      <div className="movie-card__bottom mx-4 mb-4 flex flex-col">
+                        <div className="button-field mt-1 flex items-center">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1A1D29] hover:cursor-pointer">
+                            <PlayIcon />
+                          </div>
+                          <div className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]">
+                            <GroupIcon />
+                          </div>
+                          <div className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]">
+                            <PlusIcon />
+                          </div>
+                          <Link
+                            href={`${appRouter.detailInfo.index(
+                              item.id,
+                            )}?media=movie`}
+                            className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]"
+                          >
+                            <InfoIcon />
+                          </Link>
+                        </div>
+                        <div className="mt-4 flex items-center">
+                          <div
+                            className="h-6 w-6 bg-cover bg-center bg-no-repeat"
+                            style={{
+                              backgroundImage: `url('/icons/movie.svg')`,
+                            }}
+                          ></div>
+                          <Image
+                            className="ml-[5px]"
+                            src={'/images/ad.png'}
+                            width={46}
+                            height={24}
+                            alt="ad"
+                          />
+                          <Image
+                            className="ml-2"
+                            src={'/images/cc.png'}
+                            width={34}
+                            height={24}
+                            alt="cc"
+                          />
+                          <p className="ml-2 text-highEmphasis">
+                            {item.release_date?.slice(0, 4)}
+                          </p>
+                        </div>
+                        <p className="text-over-5 mt-3 text-xs text-mediumEmphasis">
+                          {item.overview}
+                        </p>
+                      </div>
+                    </div>
+                  }
+                  placement="top"
+                  arrow={false}
+                >
+                  <Image
+                    src={getImageUrl(item.backdrop_path)}
+                    alt={item.title || 'Untitled'}
+                    fill
+                    sizes="(max-width: 768px) 90vw, (max-width: 1200px) 30vw, 20vw"
+                    priority
+                    className="left-0 top-0 z-0 h-full w-full rounded-lg object-cover"
+                  />
+                </Popover>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   )
