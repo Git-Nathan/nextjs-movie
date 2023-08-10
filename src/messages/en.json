@@ -15,6 +15,9 @@
     "watch": "Watch Trailer",
     "infor": "Information Detail"
   },
+  "Films": {
+    "upcoming": "Upcoming"
+  },
   "Footer": {
     "policy": "Privacy Policy",
     "agreement": "Subscription agreement",

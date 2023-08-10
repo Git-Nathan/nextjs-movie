@@ -173,34 +173,28 @@ body {
   &:hover {
     color: white !important;
   }
-}
-
-.homepage__text-overview {
-  @extend .text-over-4;
-}
-
-.home__btn-infor {
-  &.ant-btn-default {
-    @extend .ant-btn-default;
+  
+  &.home__btn-infor.ant-btn-default {
     &:not(:disabled):not(.ant-btn-disabled):hover {
-      color: var(--neutral-600);
-      border-color: var(--neutral-300);
+      color: var(--neutral-600) !important;
+      border-color: var(--neutral-300) !important;
     }
   }
-}
 
-.home__btn-watch {
-  &.ant-btn-default {
-    @extend .ant-btn-default;
+  &.home__btn-watch.ant-btn-default {
     &:not(:disabled):not(.ant-btn-disabled):hover {
-      color: var(--neutral-600);
-      border-color: var(--neutral-200);
+      color: var(--neutral-600) !important;
+      border-color: var(--neutral-200) !important;
     }
-  }
 
   @media (min-width: 576px) {
     max-width: 195px;
   }
+  }
+}
+
+.homepage__text-overview {
+  @extend .text-over-4;
 }
 
 .ant-form-item {
@@ -314,4 +308,13 @@ iframe {
 
 .nav-link.active {
   color: var(--text-link);
+}
+
+.swiperExtra.swiper {
+  overflow: initial !important;
+  overflow-y: hidden !important;
+}
+
+.swiperExtra .swiper-slide {
+  z-index: 5;;
 }
