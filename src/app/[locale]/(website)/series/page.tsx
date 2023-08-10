@@ -5,13 +5,11 @@ import { GroupIcon, InfoIcon, PlayIcon, PlusIcon } from '@/assets/icons'
 import { AppSpin } from '@/common/AppSpin'
 import SlideMedia from '@/components/SlideMedia'
 import { appRouter } from '@/configs'
-import { useStore } from '@/store/store'
 import { getImageUrl } from '@/utils/functions'
 import { Popover } from 'antd'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/effect-fade'
@@ -20,9 +18,7 @@ import 'swiper/css/pagination'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 export default function SeriesPage() {
-  const t = useTranslations('HomePage')
-  const { setSelectedID } = useStore()
-  const router = useRouter()
+  const t = useTranslations('Films')
   const locale = useLocale()
 
   const [loading, setLoading] = useState(true)
@@ -39,14 +35,10 @@ export default function SeriesPage() {
     getData()
   }, [locale])
 
-  const handleClickInfor = (id: number, type: string) => {
-    router.push(`/detail-infor/${id}?` + new URLSearchParams({ media: type }))
-  }
-
   if (loading) return <AppSpin />
 
   return (
-    <div className="mx-6 mb-6 mt-16 sm:mx-0 sm:mb-8 sm:mt-0">
+    <div className="mx-6 mb-6 mt-16 overflow-hidden sm:mx-0 sm:mb-8 sm:mt-0">
       <SlideMedia data={dataTrendingMovie} />
 
       <div className="mx-[5%] text-xl font-bold text-white">
@@ -78,6 +70,7 @@ export default function SeriesPage() {
             <SwiperSlide key={item.id}>
               <div className="movie-box relative z-10 flex aspect-[240/136] w-full flex-col">
                 <Popover
+                  trigger="click"
                   content={
                     <div className="movie-card absolute left-1/2 top-1/2 z-10 flex h-[363px] w-[92vw] max-w-[329px] -translate-x-1/2 -translate-y-24 flex-col overflow-hidden rounded-lg border border-solid border-[#353843] bg-neutral600 shadow-[0px_4px_15px_0px_rgba(255,255,255,0.10)]">
                       <div

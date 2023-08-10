@@ -5,12 +5,10 @@ import { GroupIcon, InfoIcon, PlayIcon, PlusIcon } from '@/assets/icons'
 import { AppSpin } from '@/common/AppSpin'
 import SlideMedia from '@/components/SlideMedia'
 import { appRouter } from '@/configs'
-import { useStore } from '@/store/store'
 import { getImageUrl } from '@/utils/functions'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import 'swiper/css'
 import 'swiper/css/effect-fade'
@@ -21,8 +19,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 export default function FilmsPage() {
   const t = useTranslations('Films')
-  const { setSelectedID } = useStore()
-  const router = useRouter()
   const locale = useLocale()
 
   const [loading, setLoading] = useState(true)
@@ -56,14 +52,10 @@ export default function FilmsPage() {
     getData()
   }, [locale])
 
-  const handleClickInfor = (id: number, type: string) => {
-    router.push(`/detail-infor/${id}?` + new URLSearchParams({ media: type }))
-  }
-
   if (loading) return <AppSpin />
 
   return (
-    <div className="mx-6 mb-6 mt-16 sm:mx-0 sm:mb-8 sm:mt-0">
+    <div className="mx-6 mb-6 mt-16 overflow-hidden sm:mx-0 sm:mb-8 sm:mt-0">
       <SlideMedia data={dataTrendingTv} />
 
       <div className="mx-[5%] text-xl font-bold text-white">
