@@ -24,7 +24,7 @@
   --neutral-700: #101116;
 
   // Text
-  --text-link: #67bdff;
+  --text-link: #02e7f5;
   --high-emphasis: #f9f9f9;
   --medium-emphasis: #c8c9cb;
   --disabled: #5f6169;
@@ -279,4 +279,8 @@ body {
       pointer-events: all;
     }
   }
+}
+
+.nav-link.active {
+  color: var(--text-link);
 }

@@ -27,22 +27,30 @@ async function fetchApi(
 }
 
 // Api methods
-export const getBySearch = (search_query: string) =>
+export const getBySearch = (search_query: string, locale: string) =>
   fetchApi(
     'get',
-    `/search/movie?` + new URLSearchParams({ query: search_query }),
+    `/search/multi?` +
+      new URLSearchParams({ query: search_query, language: locale }),
   )
 
 // export const getDetail
 
-export const getMovieById = (id: string) => fetchApi('get', `/movie/${id}`)
+export const getMovieById = (id: string, locale: string, media: string) =>
+  fetchApi(
+    'get',
+    `/${media}/${id}?` + new URLSearchParams({ language: locale }),
+  )
 
 export const getTvShowById = (id: string) => fetchApi('get', `/tv/${id}`)
 
 // export const getSimilal
 
-export const getSimilalMovies = (id: string) =>
-  fetchApi('get', `/movie/${id}/similar`)
+export const getSimilalMovies = (id: string, locale: string, media: string) =>
+  fetchApi(
+    'get',
+    `/${media}/${id}/similar?` + new URLSearchParams({ language: locale }),
+  )
 
 export const getSimilalTvShow = (id: string) =>
   fetchApi('get', `/tv/${id}/similar`)

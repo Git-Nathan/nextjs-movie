@@ -83,7 +83,7 @@ export function SearchButton(props: ISearchButtonProps) {
                 className="absolute right-12 flex h-8 items-center justify-center rounded-full border-none px-2 py-0 text-white hover:bg-slate-700"
                 onClick={handleClear}
               >
-                Clear
+                {t('Clear')}
               </Button>
               <Button
                 className="absolute right-4 flex h-8 w-8 items-center justify-center rounded-full border-none p-0 hover:bg-slate-700"

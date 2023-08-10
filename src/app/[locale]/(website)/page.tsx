@@ -15,7 +15,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 // Import Swiper styles
 import { api } from '@/api'
 import { AppSpin } from '@/common/AppSpin'
-import BtnWatchTrailer from '@/common/BtnWatch'
+import { BtnWatchTrailer } from '@/common/BtnWatch'
 import { useStore } from '@/store/store'
 import { getImageUrl } from '@/utils/functions'
 import { useEffect, useState } from 'react'

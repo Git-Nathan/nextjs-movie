@@ -1,9 +1,9 @@
-import '../globals.scss'
+import { workSans } from '@/fonts'
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { notFound } from 'next/navigation'
+import '../globals.scss'
 import { NextAuthProvider } from '../providers'
-import { workSans } from '@/fonts'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 }
 
 export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'vn' }]
+  return [{ locale: 'en' }, { locale: 'vi' }]
 }
 
 export interface ILocaleLayout {

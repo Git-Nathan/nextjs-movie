@@ -3,7 +3,7 @@
 import { api } from '@/api'
 import { MovieBoxs } from '@/components/MovieBoxs'
 import { useResultStore } from '@/store/resultsStore'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useLayoutEffect } from 'react'
 
@@ -12,6 +12,7 @@ export default function ResultPage() {
   const searchParams = useSearchParams()
   const searchQuery = searchParams.get('search_query') as string
   const t = useTranslations('Result')
+  const locale = useLocale()
 
   // Results
   const {
@@ -33,13 +34,13 @@ export default function ResultPage() {
   useEffect(() => {
     if (searchQuery !== searchContent) {
       const getResults = async () => {
-        const response = await api.getBySearch(searchQuery)
+        const response = await api.getBySearch(searchQuery, locale)
         setListResult(response.results)
         setSearchContent(searchQuery)
       }
       getResults()
     }
-  }, [searchContent, searchQuery, setListResult, setSearchContent])
+  }, [locale, searchContent, searchQuery, setListResult, setSearchContent])
 
   return (
     <div className="results-page mb-60 flex min-h-[928px] w-full justify-center">

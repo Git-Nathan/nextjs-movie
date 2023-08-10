@@ -60,7 +60,7 @@ export function HeaderAccount(props: IHeaderAccount) {
 
   return (
     <Button
-      className="header__user flex h-12 w-12 items-center justify-center rounded-full border-[2px] border-secondary bg-cover bg-center bg-no-repeat p-0"
+      className="header__user flex h-12 w-12 items-center justify-center rounded-full border-[2px] border-secondary bg-cover bg-center bg-no-repeat p-0 hover:!border-text_link"
       onClick={() => signIn()}
     >
       <div

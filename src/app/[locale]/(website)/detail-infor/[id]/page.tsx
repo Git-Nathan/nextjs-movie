@@ -3,17 +3,22 @@
 import { api } from '@/api'
 import { getSimilalMovies } from '@/api/api'
 import { AppSpin } from '@/common/AppSpin'
+import { BtnWatchTrailer } from '@/common/BtnWatch'
 import { MovieBoxs } from '@/components/MovieBoxs'
 import { workSans } from '@/fonts'
 import { IMediaDetail, IMovieBox } from '@/interface'
 import { getImageUrl } from '@/utils/functions'
 import { Button } from 'antd'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useLayoutEffect, useState } from 'react'
 
 export default function DetailPage({ params }: { params: { id: string } }) {
   const t = useTranslations('Detail')
+  const locale = useLocale()
+  const searchParams = useSearchParams()
+  const media = searchParams.get('media') as string
 
   // Movie
   const [detail, setDetail] = useState<IMediaDetail>({} as IMediaDetail)
@@ -27,13 +32,12 @@ export default function DetailPage({ params }: { params: { id: string } }) {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 
     const getData = async () => {
-      const response = await api.getMovieById(params.id)
-      console.log(response)
+      const response = await api.getMovieById(params.id, locale, media)
       setDetail(response)
       setLoading(false)
     }
     getData()
-  }, [params.id])
+  }, [locale, media, params.id])
   // ListSimilar
   const [listSimilar, setListSimilar] = useState<IMovieBox[]>([])
   const [loadingSimilar, setLoadingSimilar] = useState(true)
@@ -44,12 +48,12 @@ export default function DetailPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await getSimilalMovies(params.id)
+      const response = await getSimilalMovies(params.id, locale, media)
       setListSimilar(response.results)
       setLoadingSimilar(false)
     }
     getData()
-  }, [params.id])
+  }, [locale, media, params.id])
 
   // Render
   const renderGenders = detail.genres?.map((item) => item.name).join(', ')
@@ -83,25 +87,10 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           </div>
           <p className="mt-4 text-xs text-highEmphasis">{renderGenders}</p>
           <div className="button-field mt-10 flex flex-col sm:flex-row">
+            <BtnWatchTrailer id={detail.id} media_type={media} />
             <Button
               className={
-                'flex h-12 items-center justify-center bg-white px-6 text-base font-bold uppercase hover:bg-neutral-300 sm:justify-start ' +
-                workSans.className
-              }
-              icon={
-                <Image
-                  width={24}
-                  height={24}
-                  alt="icon-play"
-                  src="/icons/icon-play.svg"
-                />
-              }
-            >
-              {t('WATCH NOW')}
-            </Button>
-            <Button
-              className={
-                'bg-[rgba(0, 0, 0, 0.1)] hover:color-neutral700 mt-5 flex h-12 items-center justify-center px-6 text-base font-bold uppercase text-neutral100 hover:bg-neutral-400 sm:ml-5 sm:mt-0 sm:justify-start ' +
+                'bg-[rgba(0, 0, 0, 0.1)] hover:color-neutral700 mt-5 flex h-12 items-center justify-center px-6 text-base font-bold uppercase text-neutral100 hover:!border-neutral-400 hover:bg-neutral-400 sm:mt-0 sm:justify-start ' +
                 workSans.className
               }
             >

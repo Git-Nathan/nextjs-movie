@@ -22,6 +22,7 @@ export function AppHeader(props: IHeaderProps) {
               width={73}
               height={40}
               src="/icons/logo.svg"
+              priority
               alt="footer-logo"
             />
           </Link>
