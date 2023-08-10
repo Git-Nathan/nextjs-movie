@@ -1,6 +1,6 @@
 import { api } from '@/api'
 import { Button, Modal } from 'antd'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import * as React from 'react'
 import { useEffect } from 'react'
@@ -12,6 +12,7 @@ interface IBtnWatch {
 
 export function BtnWatchTrailer(props: IBtnWatch) {
   const t = useTranslations('HomePage')
+  const locale = useLocale()
 
   const [isModalOpen, setIsModalOpen] = React.useState(false)
   const [keyVideos, setkeyVideos] = React.useState<any>([])

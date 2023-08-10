@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from 'antd'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import {
@@ -29,7 +29,7 @@ export default function Home() {
   const t = useTranslations('HomePage')
   const { setSelectedID } = useStore()
   const router = useRouter()
-  const lang = 'en-US'
+  const locale = useLocale()
 
   const [loading, setLoading] = useState(true)
 
@@ -38,21 +38,21 @@ export default function Home() {
   useEffect(() => {
     setLoading(true)
     const getData = async () => {
-      const response = await api.getTrendingAll()
+      const response = await api.getTrendingAll(locale)
       setDataTrendingAll(response.results)
       setLoading(false)
     }
     getData()
-  }, [])
+  }, [locale])
 
-  const handleClickInfor = (id: number) => {
-    router.push(`/detail-infor/${id}`)
+  const handleClickInfor = (id: number, type: string) => {
+    router.push(`/detail-infor/${id}?` + new URLSearchParams({media: type}))
   }
 
   if (loading) return <AppSpin />
 
   return (
-    <div className="mx-6 my-6 sm:mx-0 sm:mb-8 sm:mt-0">
+    <div className="mx-6 mt-16 mb-6 sm:mx-0 sm:mb-8 sm:mt-0">
       <Swiper
         className="slide-desktop"
         spaceBetween={20}
@@ -105,7 +105,7 @@ export default function Home() {
                   }
                   onClick={() => {
                     setSelectedID(item?.id, item?.media_type)
-                    handleClickInfor(item?.id)
+                    handleClickInfor(item?.id, item?.media_type)
                   }}
                 >
                   {t('infor')}
@@ -180,7 +180,7 @@ export default function Home() {
                     }
                     onClick={() => {
                       setSelectedID(item?.id, item?.media_type)
-                      handleClickInfor(item?.id)
+                      handleClickInfor(item?.id, item?.media_type)
                     }}
                   >
                     {t('infor')}
