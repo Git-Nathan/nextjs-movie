@@ -8,14 +8,14 @@ import { MovieBoxs } from '@/components/MovieBoxs'
 import { workSans } from '@/fonts'
 import { IMediaDetail, IMovieBox } from '@/interface'
 import { getImageUrl } from '@/utils/functions'
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useLayoutEffect, useState } from 'react'
 
 export default function DetailPage({ params }: { params: { id: string } }) {
-  const t = useTranslations('Detail')
+  const t = useTranslations()
   const locale = useLocale()
   const searchParams = useSearchParams()
   const media = searchParams.get('media') as string
@@ -77,6 +77,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           </div>
           <div className="mt-4 flex items-center">
             <Image src={'/images/ad.png'} width={46} height={24} alt="ad" />
+
             <Image
               className="ml-2"
               src={'/images/cc.png'}
@@ -88,44 +89,78 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           <p className="mt-4 text-xs text-highEmphasis">{renderGenders}</p>
           <div className="button-field mt-10 flex flex-col sm:flex-row">
             <BtnWatchTrailer id={detail.id} media_type={media} />
+
             <Button
               className={
-                'bg-[rgba(0, 0, 0, 0.1)] hover:color-neutral700 mt-5 flex h-12 items-center justify-center px-6 text-base font-bold uppercase text-neutral100 hover:!border-neutral-400 hover:bg-neutral-400 sm:ml-5 sm:mt-0 sm:justify-start ' +
+                'bg-[rgba(0, 0, 0, 0.1)] hover:color-neutral700 mt-5 flex h-[34px] items-center justify-center px-6 text-base font-bold uppercase text-neutral100 hover:!border-neutral-400 hover:bg-neutral-400 sm:ml-5 sm:mt-0 sm:h-12 sm:justify-start ' +
                 workSans.className
               }
             >
-              {t('trailer')}
+              {t('Detail.trailer')}
             </Button>
             <div className="mt-5 flex items-center sm:ml-5 sm:mt-0">
-              <Button
-                className="flex h-12 !w-12 items-center justify-center rounded-full"
-                icon={
-                  <Image
-                    width={24}
-                    height={24}
-                    alt="icon-add"
-                    src="/icons/add.svg"
-                  />
+              <Tooltip
+                placement="top"
+                title={
+                  <p
+                    className={
+                      'text-sm font-semibold text-neutral600 ' +
+                      workSans.className
+                    }
+                  >
+                    {t('Tooltip.Add to my list')}
+                  </p>
                 }
-              />
-              <Button
-                className="ml-5 flex h-12 !w-12 items-center justify-center rounded-full"
-                icon={
-                  <Image
-                    width={24}
-                    height={24}
-                    alt="icon-group"
-                    src="/icons/group.svg"
-                  />
+                arrow={true}
+                color="white"
+              >
+                <Button
+                  className="flex h-12 !w-12 items-center justify-center rounded-full hover:!border-white"
+                  icon={
+                    <Image
+                      width={24}
+                      height={24}
+                      alt="icon-add"
+                      src="/icons/add.svg"
+                    />
+                  }
+                />
+              </Tooltip>
+
+              <Tooltip
+                placement="top"
+                title={
+                  <p
+                    className={
+                      'text-sm font-semibold text-neutral600 ' +
+                      workSans.className
+                    }
+                  >
+                    {t('Tooltip.Group view')}
+                  </p>
                 }
-              />
+                arrow={true}
+                color="white"
+              >
+                <Button
+                  className="ml-5 flex h-12 !w-12 items-center justify-center rounded-full hover:!border-white"
+                  icon={
+                    <Image
+                      width={24}
+                      height={24}
+                      alt="icon-group"
+                      src="/icons/group.svg"
+                    />
+                  }
+                />
+              </Tooltip>
             </div>
           </div>
           <p className="text-over-6 mt-6 max-w-[741px] text-xl text-mediumEmphasis">
             {detail.overview}
           </p>
         </div>
-        <div className="mt-10 md:mt-[108px]">{t('Similar')}</div>
+        <div className="mt-10 md:mt-[108px]">{t('Detail.Similar')}</div>
         <div className="mt-4 grid min-h-[604px] grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <MovieBoxs data={listSimilar} loading={loadingSimilar} />
         </div>

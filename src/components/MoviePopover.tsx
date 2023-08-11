@@ -1,11 +1,16 @@
 import { GroupIcon, InfoIcon, PlayIcon, PlusIcon } from '@/assets/icons'
 import { appRouter } from '@/configs'
+import { workSans } from '@/fonts'
 import { IMovieBox } from '@/interface'
 import { getImageUrl } from '@/utils/functions'
+import { Tooltip } from 'antd'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function MoviePopover(item: IMovieBox) {
+  const t = useTranslations('Tooltip')
+
   return (
     <div className="movie-box relative z-10 flex aspect-[240/136] w-full flex-col">
       <Image
@@ -32,21 +37,85 @@ export default function MoviePopover(item: IMovieBox) {
         </div>
         <div className="movie-card__bottom mx-4 mb-4 flex flex-col">
           <div className="button-field mt-1 flex items-center">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1A1D29] hover:cursor-pointer">
-              <PlayIcon />
-            </div>
-            <div className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]">
-              <GroupIcon />
-            </div>
-            <div className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]">
-              <PlusIcon />
-            </div>
-            <Link
-              href={`${appRouter.detailInfo.index(item.id)}?media=movie`}
-              className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]"
+            <Tooltip
+              placement="top"
+              title={
+                <p
+                  className={
+                    'text-sm font-semibold text-neutral600 ' +
+                    workSans.className
+                  }
+                >
+                  {t('Play')}
+                </p>
+              }
+              arrow={true}
+              color="white"
             >
-              <InfoIcon />
-            </Link>
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1A1D29] hover:cursor-pointer">
+                <PlayIcon />
+              </div>
+            </Tooltip>
+            <Tooltip
+              placement="top"
+              title={
+                <p
+                  className={
+                    'text-sm font-semibold text-neutral600 ' +
+                    workSans.className
+                  }
+                >
+                  {t('Group view')}
+                </p>
+              }
+              arrow={true}
+              color="white"
+            >
+              <div className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]">
+                <GroupIcon />
+              </div>
+            </Tooltip>
+            <Tooltip
+              placement="top"
+              title={
+                <p
+                  className={
+                    'text-sm font-semibold text-neutral600 ' +
+                    workSans.className
+                  }
+                >
+                  {t('Add to my list')}
+                </p>
+              }
+              arrow={true}
+              color="white"
+            >
+              <div className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]">
+                <PlusIcon />
+              </div>
+            </Tooltip>
+            <Tooltip
+              placement="top"
+              title={
+                <p
+                  className={
+                    'text-sm font-semibold text-neutral600 ' +
+                    workSans.className
+                  }
+                >
+                  {t('Infomation')}
+                </p>
+              }
+              arrow={true}
+              color="white"
+            >
+              <Link
+                href={`${appRouter.detailInfo.index(item.id)}?media=movie`}
+                className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]"
+              >
+                <InfoIcon />
+              </Link>
+            </Tooltip>
           </div>
           <div className="mt-4 flex items-center">
             <div

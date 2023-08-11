@@ -311,15 +311,21 @@ iframe {
 }
 
 .swiperExtra.swiper {
-  overflow: initial !important;
-}
+  &.swiper {
+    overflow: initial !important;
+  }
 
-.swiperExtra .swiper-slide {
-  z-index: 5;
-}
+  .swiper-pagination {
+    text-align: right !important;
 
-.swiper-pagination {
-  text-align: right !important;
+    .swiper-pagination-bullet {
+      background-color: rgba(196, 196, 196, 0.3) !important;
+    }
+
+    .swiper-pagination-bullet-active {
+      background-color: #02e7f5 !important;
+    }
+  }
 }
 
 .swiper-horizontal > .swiper-pagination-bullets,
@@ -328,10 +334,8 @@ iframe {
   top: -40px !important;
 }
 
-.swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background-color: #02e7f5 !important;
-}
-
-.swiper-pagination-bullet {
-  background-color: rgba(196, 196, 196, 0.3) !important;
+.ant-tooltip {
+  .ant-tooltip-inner {
+    padding: 8px 16px !important;
+  }
 }

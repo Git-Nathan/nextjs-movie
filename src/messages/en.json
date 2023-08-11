@@ -55,5 +55,11 @@
     "WATCH NOW": "WATCH NOW",
     "Similar": "Similar",
     "trailer": "trailer"
+  },
+  "Tooltip": {
+    "Play": "Play",
+    "Group view": "Group view",
+    "Add to my list": "Add to my list",
+    "Infomation": "Infomation"
   }
 }

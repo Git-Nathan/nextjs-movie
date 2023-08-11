@@ -55,5 +55,11 @@
     "WATCH NOW": "XEM NGAY",
     "Similar": "Phim tương tự",
     "trailer": "trailer"
+  },
+  "Tooltip": {
+    "Play": "Xem ngay",
+    "Group view": "Xem nhóm",
+    "Add to my list": "Thêm vào danh sách của tôi",
+    "Infomation": "Thông tin"
   }
 }
