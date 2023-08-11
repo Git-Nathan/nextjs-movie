@@ -317,3 +317,21 @@ iframe {
 .swiperExtra .swiper-slide {
   z-index: 5;
 }
+
+.swiper-pagination {
+  text-align: right !important;
+}
+
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: 100% !important;
+  top: -40px !important;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: #02e7f5 !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: rgba(196, 196, 196, 0.3) !important;
+}
