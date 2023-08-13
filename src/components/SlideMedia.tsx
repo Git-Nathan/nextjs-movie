@@ -52,7 +52,7 @@ export default function SlideMedia({ data }: ISlideMediaProps) {
         {data.slice(0, 10).map((item: any) => (
           <SwiperSlide
             key={item.id}
-            className={`swiper relative aspect-[1440/980] w-full bg-[] bg-cover bg-center bg-no-repeat`}
+            className={`swiper relative aspect-[1440/980] max-h-[100vh] w-full bg-[] bg-cover bg-center bg-no-repeat`}
             style={{
               backgroundImage: `linear-gradient(202deg,rgba(26, 29, 41, 0) 0%,rgba(26, 29, 41, 0.79) 59.65%,#1a1d29 100%),
               linear-gradient(180deg, rgba(26, 29, 41, 0.00) 0%, rgba(26, 29, 41, 0.79) 59.65%, #1A1D29 100%),

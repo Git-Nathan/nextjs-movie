@@ -11,8 +11,6 @@ import 'swiper/css'
 import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { Pagination } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'
 
 export default function SeriesPage() {
   const t = useTranslations('Films')
@@ -56,76 +54,12 @@ export default function SeriesPage() {
 
         <div className="mx-[5%] mb-20 text-xl font-bold text-white">
           {t('upcoming')}
-          <Swiper
-            slidesPerView={1}
-            breakpoints={{
-              480: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              992: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-              },
-              1200: {
-                slidesPerView: 5,
-                spaceBetween: 20,
-              },
-            }}
-            spaceBetween={20}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination]}
-            className="swiperExtra mt-3"
-          >
-            {dataUpcoming.slice(0, 7).map((item: any) => (
-              <SwiperSlide key={item.id}>
-                <MoviePopover {...item} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <MoviePopover data={dataUpcoming} />
         </div>
 
         <div className="mx-[5%] mb-20 text-xl font-bold text-white">
           {t('upcoming')}
-          <Swiper
-            slidesPerView={1}
-            breakpoints={{
-              480: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
-              992: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-              },
-              1200: {
-                slidesPerView: 5,
-                spaceBetween: 20,
-              },
-            }}
-            spaceBetween={20}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination]}
-            className="swiperExtra mt-3"
-          >
-            {dataUpcoming.slice(0, 7).map((item: any) => (
-              <SwiperSlide key={item.id}>
-                <PosterPopover {...item} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <PosterPopover data={dataUpcoming} />
         </div>
       </div>
     </div>
