@@ -32,6 +32,13 @@ export function HeaderMenu() {
         <MovieIcon />
         <p className="ml-2 truncate">{t('films')}</p>
       </NavLink>
+      <NavLink
+        className="flex items-center px-4 py-2 text-base text-white hover:!text-text_link"
+        href={appRouter.watch}
+      >
+        <MovieIcon />
+        <p className="ml-2 truncate">Watch</p>
+      </NavLink>
     </div>
   )
 }

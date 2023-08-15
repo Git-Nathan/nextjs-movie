@@ -19,3 +19,5 @@ export const films = {
 export const detailInfo = {
   index: (id: number) => `/detail-infor/${id}`,
 }
+
+export const watch = '/watch'

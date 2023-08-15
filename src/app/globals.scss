@@ -40,6 +40,7 @@
 body {
   color: var(--accent);
   background-color: var(--background-color);
+  overflow-x: hidden;
 }
 
 // Text overflow
@@ -347,5 +348,61 @@ iframe {
 .ant-tooltip {
   .ant-tooltip-inner {
     padding: 8px 16px !important;
+  }
+}
+
+.video-player {
+  &:hover {
+    .video-controller {
+      opacity: 1;
+    }
+  }
+
+  .video-controller {
+    opacity: 0;
+    transition: all 0.3s;
+
+    .ant-slider-rail {
+      background-color: rgba(196, 196, 196, 0.3) !important;
+    }
+
+    .video-controller__slider {
+      .ant-slider-track {
+        background-color: var(--secondary) !important;
+      }
+
+      .ant-slider-handle {
+        &::after {
+          background-color: var(--secondary) !important;
+          box-shadow: none !important;
+          width: 12px !important;
+          height: 12px !important;
+          inset-inline-start: -1px !important;
+          inset-block-start: -1px !important;
+        }
+      }
+    }
+
+    .volume-block {
+      width: 53px;
+      transition: all 0.2s;
+
+      &:hover {
+        width: 180px;
+      }
+
+      .volume-slider {
+        .ant-slider-track {
+          background-color: white !important;
+        }
+
+        .ant-slider-handle {
+          &::after {
+            background-color: white !important;
+            box-shadow: none !important;
+          }
+        }
+      }
+    }
   }
 }

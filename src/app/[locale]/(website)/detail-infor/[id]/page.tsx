@@ -61,7 +61,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
   if (loading) return <AppSpin />
 
   return (
-    <div className="detail-page relative mb-40 flex w-full justify-center">
+    <div className="detail-page relative mb-40 flex w-full justify-center overflow-hidden">
       <div
         className="absolute inset-x-0 top-0 z-0 aspect-[1440/980] w-full bg-cover bg-center bg-no-repeat"
         style={{
