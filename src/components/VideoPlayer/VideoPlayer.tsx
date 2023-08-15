@@ -1,33 +1,53 @@
-import { toHoursAndMinutes } from '@/utils/functions'
 import { Slider } from 'antd'
 import { useRef, useState } from 'react'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import ReactPlayer from 'react-player'
 import { OnProgressProps } from 'react-player/base'
+import { VideoSlider } from './VideoSlider'
+import { VideoTimer } from './VideoTimer'
 
 export interface IVideoController {
   className?: string
 }
 
-let timer: NodeJS.Timeout
-
 export function VideoPlayer({ className }: IVideoController) {
-  const [playing, setPlaying] = useState(true)
-  const [stashVolume, setStashVolume] = useState(1)
-  const [volume, setVolume] = useState(1)
-  const [seeking, setSeeking] = useState(false)
-  const [playedSeconds, setPlayedSeconds] = useState(0)
-  const [loadedSeconds, setLoadedSeconds] = useState(0)
-  const [duration, setDuration] = useState(0)
-
-  const handle = useFullScreenHandle()
-
+  // Shared Variables
+  const timerDoubleClick = useRef<NodeJS.Timeout>()
   const videoPlayerRef = useRef<ReactPlayer>(null)
+
+  // Video Player
+  const [playing, setPlaying] = useState(true)
 
   const handlePlayPause = () => {
     setPlaying((prev) => !prev)
   }
 
+  const handleClickCenter = (e: React.MouseEvent<HTMLElement>) => {
+    if (e.detail === 1) {
+      timerDoubleClick.current = setTimeout(() => {
+        setPlaying((prev) => !prev)
+      }, 200)
+    } else if (e.detail === 2) {
+      handleFullscreen()
+    }
+  }
+
+  // Hide controller
+  const [hideCursor, setHideCursor] = useState(false)
+
+  const timerCursorIdle = useRef<NodeJS.Timeout>()
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (hideCursor) {
+      setHideCursor(false)
+    }
+    clearTimeout(timerCursorIdle.current)
+    timerCursorIdle.current = setTimeout(() => {
+      setHideCursor(true)
+    }, 3000)
+  }
+
+  // Seek
   const rewindHandler = () => {
     if (videoPlayerRef.current != null) {
       const newSecond = videoPlayerRef.current.getCurrentTime() - 10
@@ -44,23 +64,21 @@ export function VideoPlayer({ className }: IVideoController) {
     }
   }
 
-  const progressHandler = (state: OnProgressProps) => {
-    if (!seeking) {
-      setPlayedSeconds(state.playedSeconds)
-      setLoadedSeconds(state.loadedSeconds)
+  // Fullscreen
+  const handle = useFullScreenHandle()
+
+  const handleFullscreen = () => {
+    clearTimeout(timerDoubleClick.current)
+    if (handle.active === false) {
+      handle.enter()
+    } else {
+      handle.exit()
     }
   }
 
-  const handleDuration = (duration: number) => {
-    setDuration(duration)
-  }
-
-  const handleSeek = (second: number) => {
-    if (videoPlayerRef.current != null) {
-      setPlayedSeconds(second)
-      videoPlayerRef.current.seekTo(second, 'seconds')
-    }
-  }
+  // Volume
+  const [volume, setVolume] = useState(1)
+  const [stashVolume, setStashVolume] = useState(1)
 
   const handleChangeVolume = (volume: number) => {
     setVolume(volume / 20)
@@ -75,22 +93,24 @@ export function VideoPlayer({ className }: IVideoController) {
     }
   }
 
-  const handleFullscreen = () => {
-    clearTimeout(timer)
-    if (handle.active === false) {
-      handle.enter()
-    } else {
-      handle.exit()
-    }
+  // Video Slider
+  const [playedSeconds, setPlayedSeconds] = useState(0)
+  const [loadedSeconds, setLoadedSeconds] = useState(0)
+  const [duration, setDuration] = useState(0)
+
+  const progressHandler = (state: OnProgressProps) => {
+    setPlayedSeconds(state.playedSeconds)
+    setLoadedSeconds(state.loadedSeconds)
   }
 
-  const handleClickCenter = (e: React.MouseEvent<HTMLElement>) => {
-    if (e.detail === 1) {
-      timer = setTimeout(() => {
-        setPlaying((prev) => !prev)
-      }, 200)
-    } else if (e.detail === 2) {
-      handleFullscreen()
+  const handleDuration = (duration: number) => {
+    setDuration(duration)
+  }
+
+  const handleSeek = (second: number) => {
+    if (videoPlayerRef.current != null) {
+      setPlayedSeconds(second)
+      videoPlayerRef.current.seekTo(second, 'seconds')
     }
   }
 
@@ -113,7 +133,20 @@ export function VideoPlayer({ className }: IVideoController) {
           onDuration={handleDuration}
           volume={volume}
         />
-        <div className="video-controller absolute left-0 top-0 flex h-full w-full flex-col items-center">
+        <div
+          className="absolute left-0 top-0 h-full w-full cursor-none"
+          onMouseMove={handleMouseMove}
+          onClick={handleClickCenter}
+        ></div>
+        <div
+          className="video-controller absolute left-0 top-0 flex h-full w-full flex-col items-center"
+          onMouseMove={handleMouseMove}
+          style={
+            hideCursor
+              ? { opacity: 0, visibility: 'hidden', cursor: 'none' }
+              : {}
+          }
+        >
           <div className="video-controller__top mt-8 flex w-full items-center px-6">
             <button
               className="h-12 w-12 bg-cover bg-center bg-no-repeat"
@@ -133,11 +166,10 @@ export function VideoPlayer({ className }: IVideoController) {
           ></div>
           <div className="video-controller__bottom relative flex w-full flex-col">
             <div className="absolute bottom-0 left-0 z-0 h-[159px] w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,_#000_100%)]"></div>
-            <Slider
-              className="video-controller__slider z-10 mx-6 my-0"
-              max={Math.floor(duration)}
-              value={playedSeconds}
-              onChange={handleSeek}
+            <VideoSlider
+              duration={duration}
+              handleSeek={handleSeek}
+              playedSeconds={playedSeconds}
             />
             <div className="z-10 flex h-[85px] w-full items-center justify-between px-6">
               <div className="video-controller__bottom__left flex items-center">
@@ -180,15 +212,7 @@ export function VideoPlayer({ className }: IVideoController) {
                     />
                   </div>
                 </div>
-                <span className="text-base">
-                  <span className="inline-block min-w-[45px]">{`${toHoursAndMinutes(
-                    Math.floor(playedSeconds),
-                  )}`}</span>
-                  <span className="ml-px mr-[2px]">/</span>
-                  <span className="inline-block min-w-[45px]">{`${toHoursAndMinutes(
-                    Math.floor(duration),
-                  )}`}</span>
-                </span>
+                <VideoTimer playedSeconds={playedSeconds} duration={duration} />
               </div>
               <div className="video-controller__bottom__right flex items-center">
                 <button
