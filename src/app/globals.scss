@@ -322,8 +322,11 @@ iframe {
 }
 
 .swiperExtra.swiper {
-  &.swiper {
-    overflow: initial !important;
+  overflow: initial !important;
+  z-index: 50;
+
+  .swiper-wrapper {
+    z-index: 50;
   }
 
   .swiper-pagination {

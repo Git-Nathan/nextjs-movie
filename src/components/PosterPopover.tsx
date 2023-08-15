@@ -21,7 +21,7 @@ export default function PosterPopover({ data }: IPosterPopoverProps) {
     <Swiper
       slidesPerView={1}
       breakpoints={{
-        480: {
+        426: {
           slidesPerView: 2,
           spaceBetween: 20,
         },

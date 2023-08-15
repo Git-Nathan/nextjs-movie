@@ -52,7 +52,7 @@ export default function FilmsPage() {
       <div className="mx-6 mb-6 mt-16 sm:mx-0 sm:mb-8 sm:mt-0">
         <SlideMedia data={dataTrendingTv} />
 
-        <div className="mx-[5%] mb-20 text-xl font-bold text-white">
+        <div className="mx-[5%] mb-20 text-xl font-bold text-white bp-425:mt-5 xs:mt-0">
           {t('upcoming')}
           <MoviePopover data={dataUpcoming} />
         </div>
