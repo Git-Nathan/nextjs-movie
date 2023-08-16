@@ -7,12 +7,12 @@ export interface IVideoTimer {
 
 export function VideoTimer({ playedSeconds, duration }: IVideoTimer) {
   return (
-    <span className="text-base">
-      <span className="inline-block min-w-[45px]">{`${toHoursAndMinutes(
+    <span className="ml-4 text-xs md:ml-0 md:text-base">
+      <span className="inline-block">{`${toHoursAndMinutes(
         Math.floor(playedSeconds),
       )}`}</span>
       <span className="ml-px mr-[2px]">/</span>
-      <span className="inline-block min-w-[45px]">{`${toHoursAndMinutes(
+      <span className="inline-block">{`${toHoursAndMinutes(
         Math.floor(duration),
       )}`}</span>
     </span>

@@ -78,9 +78,15 @@ export function MovieBoxs({ loading, data }: IMovieBoxs) {
                     arrow={true}
                     color="white"
                   >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1A1D29] hover:cursor-pointer">
+                    <Link
+                      href={
+                        `${appRouter.watch}?` +
+                        new URLSearchParams({ v: result.id.toString() })
+                      }
+                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1A1D29] hover:cursor-pointer"
+                    >
                       <PlayIcon />
-                    </div>
+                    </Link>
                   </Tooltip>
                   <Tooltip
                     placement="top"

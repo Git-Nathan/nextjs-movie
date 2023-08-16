@@ -5,12 +5,14 @@ import { MouseEvent, useRef, useState } from 'react'
 export interface IVideoSlider {
   duration: number
   playedSeconds: number
+  loadedSeconds: number
   handleSeek: (second: number) => void
 }
 
 export function VideoSlider({
   duration,
   playedSeconds,
+  loadedSeconds,
   handleSeek,
 }: IVideoSlider) {
   const [tooltipOffset, setTooltipOffset] = useState(0)
@@ -38,6 +40,8 @@ export function VideoSlider({
     }
   }
 
+  const loadedPercent = ((loadedSeconds / duration) * 100).toFixed(2)
+
   return (
     <div
       className="video-controller__slider-wrapper relative z-10 mx-6"
@@ -47,6 +51,10 @@ export function VideoSlider({
       }}
       ref={sliderRef}
     >
+      <div
+        className="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-gray-400"
+        style={{ width: `${loadedPercent}%` }}
+      ></div>
       <Slider
         className="video-controller__slider m-0"
         max={Math.floor(duration)}

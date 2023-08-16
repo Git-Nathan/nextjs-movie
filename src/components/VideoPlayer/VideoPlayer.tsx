@@ -19,13 +19,24 @@ export function VideoPlayer({ className }: IVideoController) {
   const [playing, setPlaying] = useState(true)
 
   const handlePlayPause = () => {
-    setPlaying((prev) => !prev)
+    if (playing) {
+      if (hideCursor) {
+        setHideCursor(false)
+      }
+      clearTimeout(timerCursorIdle.current)
+      setPlaying(false)
+    } else {
+      timerCursorIdle.current = setTimeout(() => {
+        setHideCursor(true)
+      }, 3500)
+      setPlaying(true)
+    }
   }
 
   const handleClickCenter = (e: React.MouseEvent<HTMLElement>) => {
     if (e.detail === 1) {
       timerDoubleClick.current = setTimeout(() => {
-        setPlaying((prev) => !prev)
+        handlePlayPause()
       }, 200)
     } else if (e.detail === 2) {
       handleFullscreen()
@@ -42,9 +53,11 @@ export function VideoPlayer({ className }: IVideoController) {
       setHideCursor(false)
     }
     clearTimeout(timerCursorIdle.current)
-    timerCursorIdle.current = setTimeout(() => {
-      setHideCursor(true)
-    }, 3000)
+    if (playing) {
+      timerCursorIdle.current = setTimeout(() => {
+        setHideCursor(true)
+      }, 3500)
+    }
   }
 
   // Seek
@@ -114,23 +127,31 @@ export function VideoPlayer({ className }: IVideoController) {
     }
   }
 
+  const handleOnSeek = (second: number) => {
+    setPlayedSeconds(second)
+  }
+
+  console.log(hideCursor)
+
   return (
     <FullScreen handle={handle}>
       <div
         className={
-          'video-player relative h-[80vh] w-full bg-black ' + className
+          'video-player relative aspect-[1920/1080] max-h-[80vh] w-full bg-black ' +
+          className
         }
-        style={handle.active ? { height: '100%' } : { height: '80vh' }}
+        style={handle.active ? { height: '100%', maxHeight: '100%' } : {}}
       >
         <ReactPlayer
           className="absolute left-0 top-0"
-          url="https://www.youtube.com/watch?v=_oOZG5-tqpA"
+          url="https://firebasestorage.googleapis.com/v0/b/youpixels.appspot.com/o/videos%2F1669797638373%C4%90en%20-%20Ai%20mu%E1%BB%91n%20nghe%20kh%C3%B4ng%20(dongvui%20harmony).mp4?alt=media&token=2180ad56-257e-47ec-a11e-6e4d82485d06"
           width="100%"
           height="100%"
           playing={playing}
           ref={videoPlayerRef}
           onProgress={progressHandler}
           onDuration={handleDuration}
+          onSeek={handleOnSeek}
           volume={volume}
         />
         <div
@@ -147,21 +168,23 @@ export function VideoPlayer({ className }: IVideoController) {
               : {}
           }
         >
-          <div className="video-controller__top mt-8 flex w-full items-center px-6">
+          <div className="video-controller__top mt-2 flex w-full items-center px-2 md:mt-8 md:px-6">
             <button
-              className="h-12 w-12 bg-cover bg-center bg-no-repeat"
+              className="h-6 w-6 bg-cover bg-center bg-no-repeat md:h-12 md:w-12"
               type="button"
               style={{ backgroundImage: `url('/icons/arrow-back.svg')` }}
             ></button>
-            <div className="ml-6 flex flex-col">
-              <div className="title text-[28px] font-bold">Loki</div>
-              <div className="text-lg text-[rgba(255,255,255,0.80)]">
+            <div className="ml-2 flex flex-col md:ml-6">
+              <div className="title text-base font-bold md:text-[28px]">
+                Loki
+              </div>
+              <div className="text-sm text-[rgba(255,255,255,0.80)] md:text-lg">
                 T1:E1 Un glorioso propósito
               </div>
             </div>
           </div>
           <div
-            className="video-controller__center w-full flex-grow"
+            className="video-controller__center pointer-events-none w-full flex-grow md:pointer-events-auto"
             onClick={handleClickCenter}
           ></div>
           <div className="video-controller__bottom relative flex w-full flex-col">
@@ -169,18 +192,19 @@ export function VideoPlayer({ className }: IVideoController) {
             <VideoSlider
               duration={duration}
               handleSeek={handleSeek}
+              loadedSeconds={loadedSeconds}
               playedSeconds={playedSeconds}
             />
-            <div className="z-10 flex h-[85px] w-full items-center justify-between px-6">
+            <div className="z-10 flex h-12 w-full items-center justify-between px-6 md:h-[85px]">
               <div className="video-controller__bottom__left flex items-center">
                 <button
-                  className="h-[37px] w-[37px] bg-cover bg-center bg-no-repeat"
+                  className="h-[26px] w-[26px] bg-cover bg-center bg-no-repeat md:h-[37px] md:w-[37px]"
                   type="button"
                   style={{ backgroundImage: `url('/icons/replay-10.svg')` }}
                   onClick={rewindHandler}
                 />
                 <button
-                  className="ml-8 h-[37px] w-[37px] bg-cover bg-center bg-no-repeat duration-300"
+                  className="ml-4 h-[26px] w-[26px] bg-cover bg-center bg-no-repeat duration-300 md:ml-8 md:h-[37px] md:w-[37px]"
                   type="button"
                   style={
                     playing
@@ -190,12 +214,12 @@ export function VideoPlayer({ className }: IVideoController) {
                   onClick={handlePlayPause}
                 />
                 <button
-                  className="ml-8 h-[37px] w-[37px] bg-cover bg-center bg-no-repeat"
+                  className="ml-4 h-[26px] w-[26px] bg-cover bg-center bg-no-repeat md:ml-8 md:h-[37px] md:w-[37px]"
                   type="button"
                   style={{ backgroundImage: `url('/icons/forward-10.svg')` }}
                   onClick={fastFowardHandler}
                 />
-                <div className="volume-block ml-8 overflow-hidden">
+                <div className="volume-block ml-8 hidden overflow-hidden md:block">
                   <div className="flex w-[169px] items-center">
                     <button
                       className="h-[37px] w-[37px] bg-cover bg-center bg-no-repeat"
@@ -216,7 +240,7 @@ export function VideoPlayer({ className }: IVideoController) {
               </div>
               <div className="video-controller__bottom__right flex items-center">
                 <button
-                  className="ml-8 h-[37px] w-[37px] bg-cover bg-center bg-no-repeat"
+                  className="ml-8  h-[26px] w-[26px] bg-cover bg-center bg-no-repeat md:h-[37px] md:w-[37px]"
                   type="button"
                   style={{ backgroundImage: `url('/icons/fullscreen.svg')` }}
                   onClick={handleFullscreen}

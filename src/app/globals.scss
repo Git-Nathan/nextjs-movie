@@ -387,11 +387,8 @@ iframe {
       width: 53px;
       transition: all 0.2s;
 
-      &:hover {
-        width: 180px;
-      }
-
       .volume-slider {
+        opacity: 0;
         .ant-slider-track {
           background-color: white !important;
         }
@@ -401,6 +398,14 @@ iframe {
             background-color: white !important;
             box-shadow: none !important;
           }
+        }
+      }
+
+      &:hover {
+        width: 180px;
+
+        .volume-slider {
+          opacity: 1;
         }
       }
     }
