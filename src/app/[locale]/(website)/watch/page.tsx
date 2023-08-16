@@ -1,7 +1,7 @@
 'use client'
 
 import { AppSpin } from '@/common/AppSpin'
-import { VideoPlayer } from '@/components/VideoPlayer'
+import { VideoPlayer } from '@/components/VideoPlayer/VideoPlayer'
 import { useEffect, useState } from 'react'
 
 export default function WatchPage() {
