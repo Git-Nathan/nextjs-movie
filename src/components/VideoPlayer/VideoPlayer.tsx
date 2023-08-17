@@ -1,5 +1,10 @@
 import { Slider } from 'antd'
-import { useRef, useState } from 'react'
+import {
+  WheelEvent as ReactWheelEvent,
+  useCallback,
+  useRef,
+  useState,
+} from 'react'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import ReactPlayer from 'react-player'
 import { OnProgressProps } from 'react-player/base'
@@ -48,7 +53,7 @@ export function VideoPlayer({ className }: IVideoController) {
 
   const timerCursorIdle = useRef<NodeJS.Timeout>()
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+  const handleMouseMove = () => {
     if (hideCursor) {
       setHideCursor(false)
     }
@@ -93,6 +98,10 @@ export function VideoPlayer({ className }: IVideoController) {
   const [volume, setVolume] = useState(1)
   const [stashVolume, setStashVolume] = useState(1)
 
+  const handleDisableScroll = useCallback((e: WheelEvent) => {
+    e.preventDefault()
+  }, [])
+
   const handleChangeVolume = (volume: number) => {
     setVolume(volume / 20)
   }
@@ -104,6 +113,34 @@ export function VideoPlayer({ className }: IVideoController) {
     } else {
       setVolume(stashVolume)
     }
+  }
+
+  const handleOnWheel = (e: ReactWheelEvent) => {
+    if (e.deltaY > 0) {
+      const newVolumeValue = volume - 0.1
+      if (newVolumeValue >= 0) {
+        setVolume(newVolumeValue)
+      } else {
+        setVolume(0)
+      }
+    } else {
+      const newVolumeValue = volume + 0.1
+      if (newVolumeValue <= 1) {
+        setVolume(newVolumeValue)
+      } else {
+        setVolume(1)
+      }
+    }
+  }
+
+  const disablePageScroll = () => {
+    window.addEventListener('wheel', handleDisableScroll, {
+      passive: false,
+    })
+  }
+
+  const enablePageScroll = () => {
+    window.removeEventListener('wheel', handleDisableScroll)
   }
 
   // Video Slider
@@ -130,8 +167,6 @@ export function VideoPlayer({ className }: IVideoController) {
   const handleOnSeek = (second: number) => {
     setPlayedSeconds(second)
   }
-
-  console.log(hideCursor)
 
   return (
     <FullScreen handle={handle}>
@@ -227,13 +262,19 @@ export function VideoPlayer({ className }: IVideoController) {
                       style={{ backgroundImage: `url('/icons/volume.svg')` }}
                       onClick={handleClickVolume}
                     />
-                    <Slider
-                      className="volume-slider ml-4 w-[100px]"
-                      max={20}
-                      tooltip={{ open: false }}
-                      value={volume * 20}
-                      onChange={handleChangeVolume}
-                    />
+                    <div
+                      onWheel={handleOnWheel}
+                      onMouseEnter={disablePageScroll}
+                      onMouseLeave={enablePageScroll}
+                    >
+                      <Slider
+                        className="volume-slider ml-4 w-[100px]"
+                        max={20}
+                        tooltip={{ open: false }}
+                        value={volume * 20}
+                        onChange={handleChangeVolume}
+                      />
+                    </div>
                   </div>
                 </div>
                 <VideoTimer playedSeconds={playedSeconds} duration={duration} />
