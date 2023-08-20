@@ -13,12 +13,12 @@ export class AxiosObservable {
     this.axios = axios.create(this.config)
   }
 
-  get interceptors() {
-    return this.axios.interceptors
-  }
-
   static create(config?: AxiosRequestConfig) {
     return new AxiosObservable(config)
+  }
+
+  get interceptors() {
+    return this.axios.interceptors
   }
 
   request(config: AxiosRequestConfig) {

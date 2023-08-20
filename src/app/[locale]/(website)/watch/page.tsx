@@ -7,16 +7,6 @@ import { useEffect, useState } from 'react'
 export default function WatchPage() {
   const [loading, setLoading] = useState(true)
 
-  // Video
-  const [videoState, setVideoState] = useState({
-    playing: true,
-    muted: false,
-    volume: 0.5,
-    played: 0,
-    seeking: false,
-    Buffer: true,
-  })
-
   useEffect(() => {
     setLoading(false)
   }, [])

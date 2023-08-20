@@ -1,10 +1,11 @@
 'use client'
 
-import { api } from '@/api'
+import { Api, api } from '@/api'
 import { getTrendingAll } from '@/api/api'
 import { MovieBoxs } from '@/components/MovieBoxs'
 import { IMovieBox } from '@/interface'
 import { useResultStore } from '@/store/resultsStore'
+import { useQuery } from '@tanstack/react-query'
 import { useLocale, useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useLayoutEffect, useState } from 'react'
@@ -60,6 +61,14 @@ export default function ResultPage() {
     }
     getData()
   }, [locale])
+
+  // New
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['results'],
+    queryFn: () => Api.search.getMulti(searchQuery, locale),
+  })
+
+  console.log({ isLoading, error, data })
 
   return (
     <div className="results-page mb-60 flex min-h-[928px] w-full justify-center">
