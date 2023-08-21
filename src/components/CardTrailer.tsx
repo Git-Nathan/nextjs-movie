@@ -1,42 +1,32 @@
-import { Api, api } from '@/api'
+import { Api } from '@/api'
 import { GroupIcon, InfoIcon, PlayIcon, PlusIcon } from '@/assets/icons'
 import { appRouter } from '@/configs'
 import { IMovieBox } from '@/interface'
+import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import ReactPlayer from 'react-player'
 
 export default function CardTrailer(item: IMovieBox) {
-  const [keyVideos, setkeyVideos] = useState<any>([])
   const [mouseEvent, setMouseEvent] = useState(false)
 
-  const keyTrailer = keyVideos?.find(
-    (item: any) =>
-      item.type === 'Teaser' ||
-      item.type === 'Trailer' ||
-      item.type === 'Opening Credits',
-  )
-
-  const handleMouseOver = async () => {
-    setMouseEvent(true)
-    try {
-      const response = await api.getVideoTrailer(item.id, 'movie')
-      setkeyVideos(response.results)
-    } catch (error) { }
-  }
+  const { data } = useQuery({
+    queryKey: ['trailerCard', item.id],
+    queryFn: () => Api.trailer.getTrailer(item.id, "movie"),
+  })
 
   return (
     <div
       className="movie-card absolute left-1/2 top-1/2 z-10 flex h-[363px] w-full -translate-x-1/2 -translate-y-1/2 flex-col 
       overflow-hidden rounded-lg border border-solid border-[#353843] bg-neutral600 shadow-[0px_4px_15px_0px_rgba(255,255,255,0.10)]"
-      onMouseEnter={handleMouseOver}
+      onMouseEnter={() => setMouseEvent(true)}
       onMouseLeave={() => setMouseEvent(false)}
     >
       {mouseEvent ? (
         <div className="pointer-events-none relative mb-2">
           <ReactPlayer
-            url={`https://www.youtube.com/watch?v=${keyTrailer?.key}`}
+            url={`https://www.youtube.com/watch?v=${data?.key}`}
             width="100%"
             height="100%"
             playing

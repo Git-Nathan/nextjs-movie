@@ -14,7 +14,7 @@ export default function FilmsPage() {
   const locale = useLocale()
 
   const { isLoading, data } = useQuery({
-    queryKey: ['trending', locale],
+    queryKey: ['trendingMovie', locale],
     queryFn: () => Api.trending.getTrendingMovie(locale),
   })
 
