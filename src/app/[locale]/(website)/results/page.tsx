@@ -1,13 +1,10 @@
 'use client'
 
 import { Api } from '@/api'
-import { getTrendingAll } from '@/api/api'
 import { MovieBoxs } from '@/components/MovieBoxs'
-import { IMovieBox } from '@/interface'
 import { useQuery } from '@tanstack/react-query'
 import { useLocale, useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useLayoutEffect, useState } from 'react'
 
 export default function ResultPage() {
   // Get search_query
@@ -17,27 +14,16 @@ export default function ResultPage() {
   const locale = useLocale()
 
   // Results
-  const { isLoading, data } = useQuery({
+  const results = useQuery({
     queryKey: ['results', searchQuery, locale],
     queryFn: () => Api.search.getMulti(searchQuery, locale),
   })
 
   // Recommend
-  const [listSimilar, setListSimilar] = useState<IMovieBox[]>([])
-  const [loadingSimilar, setLoadingSimilar] = useState(true)
-
-  useLayoutEffect(() => {
-    setLoadingSimilar(true)
-  }, [])
-
-  useEffect(() => {
-    const getData = async () => {
-      const response = await getTrendingAll(locale)
-      setListSimilar(response.results)
-      setLoadingSimilar(false)
-    }
-    getData()
-  }, [locale])
+  const recommend = useQuery({
+    queryKey: ['recommend', searchQuery, locale],
+    queryFn: () => Api.trending.getTrendingAll(locale),
+  })
 
   return (
     <div className="results-page mb-60 flex min-h-[928px] w-full justify-center">
@@ -47,19 +33,19 @@ export default function ResultPage() {
           <b className="text-white">“{searchQuery}”</b>
         </div>
         {/* No results found */}
-        {data?.length === 0 && !isLoading && (
+        {results.data?.length === 0 && !results.isLoading && (
           <div className="mt-8 text-base text-[rgba(255,255,255,0.60)]">
             {t('No results found')}!
           </div>
         )}
         <div className="mt-4 grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          <MovieBoxs data={data || []} loading={isLoading} />
+          <MovieBoxs data={results.data || []} loading={results.isLoading} />
         </div>
         <div className="mt-4 text-lg text-[rgba(255,255,255,0.60)] md:mt-12 md:text-2xl">
           <b className="text-white">{t('We recommend these similar titles')}</b>
         </div>
         <div className="mt-4 grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          <MovieBoxs data={listSimilar} loading={loadingSimilar} />
+          <MovieBoxs data={recommend.data} loading={recommend.isLoading} />
         </div>
       </div>
     </div>

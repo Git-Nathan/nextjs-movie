@@ -22,7 +22,7 @@ export class AxiosObservable {
   }
 
   request(config: AxiosRequestConfig) {
-    return new Observable<AxiosResponse<any>>((subscribe) => {
+    return new Observable<AxiosResponse>((subscribe) => {
       this.axios
         .request({ ...config })
         .then((response) => {

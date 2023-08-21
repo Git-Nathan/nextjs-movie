@@ -1,6 +1,5 @@
 import { IGenres } from '@/interface'
 import { IMedia } from '@/interfaces'
-import { AxiosResponse } from 'axios'
 import { lastValueFrom, map } from 'rxjs'
 import { axiosInstance } from '.'
 
@@ -13,7 +12,7 @@ export class Media {
         })
         .pipe(
           map((response) => {
-            const { data } = response as AxiosResponse
+            const { data } = response
             return {
               ...data,
               genres: data.genres.map((item: IGenres) => item.name).join(', '),
@@ -31,7 +30,7 @@ export class Media {
         })
         .pipe(
           map((response) => {
-            const { data } = response as AxiosResponse
+            const { data } = response
             return {
               ...data,
               results: data.results as IMedia[],
