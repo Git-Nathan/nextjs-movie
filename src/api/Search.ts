@@ -1,4 +1,4 @@
-import { IFilm } from '@/interfaces'
+import { IMedia } from '@/interfaces'
 import { AxiosResponse } from 'axios'
 import { lastValueFrom, map } from 'rxjs'
 import { axiosInstance } from '.'
@@ -15,7 +15,7 @@ export class Search {
           const axiosResponse: AxiosResponse = data as AxiosResponse
           return {
             ...axiosResponse.data,
-            results: axiosResponse.data.results as IFilm[],
+            results: axiosResponse.data.results as IMedia[],
           }
         }),
       )

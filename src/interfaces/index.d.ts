@@ -1,4 +1,4 @@
-export interface IFilm {
+export interface IMedia {
   id: number
   title: string
   backdrop_path: string

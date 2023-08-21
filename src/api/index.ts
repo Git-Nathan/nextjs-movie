@@ -1,5 +1,5 @@
 import { Search } from './Search'
-import createAxiosInstance from './createAxiosInstance'
+import createAxiosInstance from './config/createAxiosInstance'
 
 export * as api from './api'
 
