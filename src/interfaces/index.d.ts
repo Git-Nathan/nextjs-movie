@@ -7,3 +7,8 @@ export interface IMedia {
   release_date: string
   media_type: string
 }
+
+export interface IGenres {
+  id: number
+  name: string
+}

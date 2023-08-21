@@ -32,6 +32,10 @@ export function MovieBoxs({ loading, data }: IMovieBoxs) {
       </>
     )
 
+  if (!loading && data.length == 0) {
+    return 'No result'
+  }
+
   return (
     <>
       {data.map((result) => (
