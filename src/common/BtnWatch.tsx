@@ -1,10 +1,8 @@
-import { Api, api } from '@/api'
-import { useQuery } from '@tanstack/react-query'
 import { Button, Modal } from 'antd'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import * as React from 'react'
-import { useEffect } from 'react'
+import PreviewModal from './PreviewModal'
 
 interface IBtnWatch {
   id: number
@@ -14,31 +12,7 @@ interface IBtnWatch {
 export function BtnWatchTrailer(props: IBtnWatch) {
   const t = useTranslations('HomePage')
 
-  const { isLoading, data } = useQuery({
-    queryKey: ['trailer'],
-    queryFn: () => Api.trailer.getTrailer(props.id, props.media_type),
-  })
-  console.log(data);
-
   const [isModalOpen, setIsModalOpen] = React.useState(false)
-  const [keyVideos, setkeyVideos] = React.useState<any>([])
-
-  const keyTrailer = keyVideos?.find(
-    (item: any) =>
-      item.type === 'Teaser' ||
-      item.type === 'Trailer' ||
-      item.type === 'Opening Credits',
-  )
-
-  useEffect(() => {
-    if (isModalOpen) {
-      const getData = async () => {
-        const response = await api.getVideoTrailer(props.id, props.media_type)
-        setkeyVideos(response.results)
-      }
-      getData()
-    }
-  }, [props.id, props.media_type, isModalOpen])
 
   return (
     <>
@@ -60,11 +34,7 @@ export function BtnWatchTrailer(props: IBtnWatch) {
         onCancel={() => setIsModalOpen(false)}
         footer={null}
       >
-        <iframe
-          src={`https://www.youtube.com/embed/${keyTrailer?.key}`}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        ></iframe>
+        <PreviewModal {...props} />
       </Modal>
     </>
   )

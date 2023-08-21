@@ -13,7 +13,7 @@ export default function Home() {
   const locale = useLocale()
 
   const { isLoading, data } = useQuery({
-    queryKey: ['trending', locale],
+    queryKey: ['trendingAll', locale],
     queryFn: () => Api.trending.getTrendingAll(locale),
   })
 

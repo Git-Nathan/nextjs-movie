@@ -13,7 +13,7 @@ export default function SeriesPage() {
   const locale = useLocale()
 
   const { isLoading, data } = useQuery({
-    queryKey: ['trending', locale],
+    queryKey: ['trendingTvShow', locale],
     queryFn: () => Api.trending.getTrendingTVShow(locale),
   })
 
