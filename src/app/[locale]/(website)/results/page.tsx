@@ -1,10 +1,9 @@
 'use client'
 
-import { Api, api } from '@/api'
+import { Api } from '@/api'
 import { getTrendingAll } from '@/api/api'
 import { MovieBoxs } from '@/components/MovieBoxs'
 import { IMovieBox } from '@/interface'
-import { useResultStore } from '@/store/resultsStore'
 import { useQuery } from '@tanstack/react-query'
 import { useLocale, useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
@@ -18,32 +17,10 @@ export default function ResultPage() {
   const locale = useLocale()
 
   // Results
-  const {
-    listResult,
-    loading,
-    setListResult,
-    setLoading,
-    searchContent,
-    setSearchContent,
-  } = useResultStore()
-
-  useLayoutEffect(() => {
-    if (searchQuery !== searchContent) {
-      setLoading(true)
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-    }
-  }, [searchContent, searchQuery, setLoading])
-
-  useEffect(() => {
-    if (searchQuery !== searchContent) {
-      const getResults = async () => {
-        const response = await api.getBySearch(searchQuery, locale)
-        setListResult(response.results)
-        setSearchContent(searchQuery)
-      }
-      getResults()
-    }
-  }, [locale, searchContent, searchQuery, setListResult, setSearchContent])
+  const { isLoading, data } = useQuery({
+    queryKey: ['results', searchQuery, locale],
+    queryFn: () => Api.search.getMulti(searchQuery, locale),
+  })
 
   // Recommend
   const [listSimilar, setListSimilar] = useState<IMovieBox[]>([])
@@ -62,14 +39,6 @@ export default function ResultPage() {
     getData()
   }, [locale])
 
-  // New
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['results'],
-    queryFn: () => Api.search.getMulti(searchQuery, locale),
-  })
-
-  console.log({ isLoading, error, data })
-
   return (
     <div className="results-page mb-60 flex min-h-[928px] w-full justify-center">
       <div className="flex w-11/12 max-w-[1280px] flex-col">
@@ -78,13 +47,13 @@ export default function ResultPage() {
           <b className="text-white">“{searchQuery}”</b>
         </div>
         {/* No results found */}
-        {listResult.length === 0 && !loading && (
+        {data?.results.length === 0 && !isLoading && (
           <div className="mt-8 text-base text-[rgba(255,255,255,0.60)]">
             {t('No results found')}!
           </div>
         )}
         <div className="mt-4 grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          <MovieBoxs data={listResult} loading={loading} />
+          <MovieBoxs data={data?.results} loading={isLoading} />
         </div>
         <div className="mt-4 text-lg text-[rgba(255,255,255,0.60)] md:mt-12 md:text-2xl">
           <b className="text-white">{t('We recommend these similar titles')}</b>
