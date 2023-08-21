@@ -1,3 +1,4 @@
+import { Media } from './Media'
 import { Search } from './Search'
 import createAxiosInstance from './config/createAxiosInstance'
 
@@ -16,5 +17,6 @@ axiosInstance.interceptors.request.use((config) => {
 })
 
 const search = new Search()
+const media = new Media()
 
-export const Api = { search }
+export const Api = { search, media }

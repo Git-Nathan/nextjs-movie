@@ -1,7 +1,7 @@
 import { GroupIcon, InfoIcon, PlayIcon, PlusIcon } from '@/assets/icons'
 import { appRouter } from '@/configs'
 import { workSans } from '@/fonts'
-import { IMovieBox } from '@/interface'
+import { IMedia } from '@/interfaces'
 import { getImageUrl } from '@/utils/functions'
 import { Skeleton, Tooltip } from 'antd'
 import { useTranslations } from 'next-intl'
@@ -10,7 +10,7 @@ import Link from 'next/link'
 
 export interface IMovieBoxs {
   loading: boolean
-  data: IMovieBox[]
+  data: IMedia[]
 }
 
 export function MovieBoxsPopover() {}

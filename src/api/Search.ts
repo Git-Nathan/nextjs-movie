@@ -5,20 +5,21 @@ import { axiosInstance } from '.'
 
 export class Search {
   getMulti(search_query: string, locale: string) {
-    const response = axiosInstance
-      .get('/search/multi', {
-        query: search_query,
-        language: locale,
-      })
-      .pipe(
-        map((data) => {
-          const axiosResponse: AxiosResponse = data as AxiosResponse
-          return {
-            ...axiosResponse.data,
-            results: axiosResponse.data.results as IMedia[],
-          }
-        }),
-      )
-    return lastValueFrom(response)
+    return lastValueFrom(
+      axiosInstance
+        .get('/search/multi', {
+          query: search_query,
+          language: locale,
+        })
+        .pipe(
+          map((response) => {
+            const { data } = response as AxiosResponse
+            return {
+              ...data,
+              results: data.results as IMedia[],
+            }
+          }),
+        ),
+    )
   }
 }
