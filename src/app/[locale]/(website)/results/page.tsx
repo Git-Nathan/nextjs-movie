@@ -47,13 +47,13 @@ export default function ResultPage() {
           <b className="text-white">“{searchQuery}”</b>
         </div>
         {/* No results found */}
-        {data?.results.length === 0 && !isLoading && (
+        {data?.length === 0 && !isLoading && (
           <div className="mt-8 text-base text-[rgba(255,255,255,0.60)]">
             {t('No results found')}!
           </div>
         )}
         <div className="mt-4 grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          <MovieBoxs data={data?.results} loading={isLoading} />
+          <MovieBoxs data={data || []} loading={isLoading} />
         </div>
         <div className="mt-4 text-lg text-[rgba(255,255,255,0.60)] md:mt-12 md:text-2xl">
           <b className="text-white">{t('We recommend these similar titles')}</b>

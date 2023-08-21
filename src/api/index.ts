@@ -1,5 +1,9 @@
 import { Media } from './Media'
 import { Search } from './Search'
+import { Similar } from './Similar'
+import { Trailer } from './Trailer'
+import { Trending } from './Trending'
+import { UpComing } from './UpComing'
 import createAxiosInstance from './config/createAxiosInstance'
 
 export * as api from './api'
@@ -18,5 +22,9 @@ axiosInstance.interceptors.request.use((config) => {
 
 const search = new Search()
 const media = new Media()
+const trending = new Trending()
+const upComing = new UpComing()
+const similar = new Similar()
+const trailer = new Trailer()
 
-export const Api = { search, media }
+export const Api = { search, media, trending, upComing, similar, trailer }

@@ -42,7 +42,7 @@ export default function MoviePopover({ data }: IMoviePopoverProps) {
       modules={[Pagination]}
       className="swiperExtra mt-3"
     >
-      {data.slice(0, 7).map((item) => (
+      {data?.slice(0, 7).map((item) => (
         <SwiperSlide className="relative hover:z-50" key={item.id}>
           <div className="movie-box relative flex aspect-[240/136] w-full flex-col hover:z-10">
             <Popover

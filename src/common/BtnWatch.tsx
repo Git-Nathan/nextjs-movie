@@ -1,4 +1,5 @@
-import { api } from '@/api'
+import { Api, api } from '@/api'
+import { useQuery } from '@tanstack/react-query'
 import { Button, Modal } from 'antd'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
@@ -12,7 +13,12 @@ interface IBtnWatch {
 
 export function BtnWatchTrailer(props: IBtnWatch) {
   const t = useTranslations('HomePage')
-  const locale = useLocale()
+
+  const { isLoading, data } = useQuery({
+    queryKey: ['trailer'],
+    queryFn: () => Api.trailer.getTrailer(props.id, props.media_type),
+  })
+  console.log(data);
 
   const [isModalOpen, setIsModalOpen] = React.useState(false)
   const [keyVideos, setkeyVideos] = React.useState<any>([])

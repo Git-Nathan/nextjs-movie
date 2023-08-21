@@ -1,5 +1,8 @@
 export const getImageUrl = (imagePath: string) => {
-  return `https://image.tmdb.org/t/p/original${imagePath}`
+  const url = imagePath
+    ? `https://image.tmdb.org/t/p/original${imagePath}`
+    : '/images/no-image.png'
+  return url
 }
 
 export function padWithLeadingZeros(num: number, totalLength: number) {

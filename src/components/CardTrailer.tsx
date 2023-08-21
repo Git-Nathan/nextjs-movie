@@ -1,16 +1,13 @@
-import { api } from '@/api'
+import { Api, api } from '@/api'
 import { GroupIcon, InfoIcon, PlayIcon, PlusIcon } from '@/assets/icons'
 import { appRouter } from '@/configs'
 import { IMovieBox } from '@/interface'
-import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import ReactPlayer from 'react-player'
 
 export default function CardTrailer(item: IMovieBox) {
-  const t = useTranslations('Tooltip')
-
   const [keyVideos, setkeyVideos] = useState<any>([])
   const [mouseEvent, setMouseEvent] = useState(false)
 
@@ -26,7 +23,7 @@ export default function CardTrailer(item: IMovieBox) {
     try {
       const response = await api.getVideoTrailer(item.id, 'movie')
       setkeyVideos(response.results)
-    } catch (error) {}
+    } catch (error) { }
   }
 
   return (

@@ -49,7 +49,7 @@ export default function SlideMedia({ data }: ISlideMediaProps) {
         }}
         modules={[EffectFade, Autoplay, Pagination, Navigation]}
       >
-        {data.slice(0, 10).map((item: any) => (
+        {data.map((item: any) => (
           <SwiperSlide
             key={item.id}
             className={`swiper relative aspect-[1440/980] max-h-[100vh] w-full bg-[] bg-cover bg-center bg-no-repeat`}
@@ -60,13 +60,11 @@ export default function SlideMedia({ data }: ISlideMediaProps) {
             }}
           >
             <div
-              className={`homepage__text-banner absolute left-[5%] ${
-                item?.overview?.length > 100 ? 'top-[40%]' : 'top-[45%]'
-              } ${
-                item?.title?.length < 15
+              className={`homepage__text-banner absolute left-[5%] ${item?.overview?.length > 100 ? 'top-[40%]' : 'top-[45%]'
+                } ${item?.title?.length < 15
                   ? 'text-3xl sm:text-4xl md:text-5xl'
                   : 'text-xl lg:text-3xl'
-              } max-w-md uppercase md:max-w-xl lg:max-w-3xl`}
+                } max-w-md uppercase md:max-w-xl lg:max-w-3xl`}
             >
               {item.title || item.name}
 
@@ -132,11 +130,10 @@ export default function SlideMedia({ data }: ISlideMediaProps) {
             <div className="absolute z-10 flex w-full justify-center">
               <div
                 className={`homepage__text-banner absolute bottom-[-79vw] left-0 bp-425:bottom-[-65vw] xs:bottom-[-55vw]
-              ${
-                item?.title?.length > 15 || item?.name?.length > 15
-                  ? 'text-sm bp-375:text-xl'
-                  : 'text-xl bp-375:text-2xl'
-              }
+              ${item?.title?.length > 15 || item?.name?.length > 15
+                    ? 'text-sm bp-375:text-xl'
+                    : 'text-xl bp-375:text-2xl'
+                  }
               w-full text-center uppercase`}
               >
                 {item.title || item.name}
