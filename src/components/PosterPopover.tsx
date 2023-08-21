@@ -45,7 +45,7 @@ export default function PosterPopover({ data }: IPosterPopoverProps) {
       modules={[Pagination]}
       className="swiperExtra mt-3"
     >
-      {data.slice(0, 7).map((item: any) => (
+      {data?.slice(0, 7).map((item: any) => (
         <SwiperSlide className="relative hover:z-50" key={item.id}>
           <div className="movie-box z-10 flex aspect-[240/361] w-full flex-col hover:z-10">
             <Image

@@ -1,49 +1,27 @@
 'use client'
 
-import { useLocale, useTranslations } from 'next-intl'
+import { useLocale } from 'next-intl'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 
 // Import Swiper styles
-import { api } from '@/api'
+import { Api } from '@/api'
 import { AppSpin } from '@/common/AppSpin'
 import SlideMedia from '@/components/SlideMedia'
-import { useStore } from '@/store/store'
-import { useEffect, useState } from 'react'
-import 'swiper/css'
-import 'swiper/css/effect-fade'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import { useQuery } from '@tanstack/react-query'
 
 export default function Home() {
-  const t = useTranslations('HomePage')
-  const { setSelectedID } = useStore()
-  const router = useRouter()
   const locale = useLocale()
 
-  const [loading, setLoading] = useState(true)
+  const { isLoading, data } = useQuery({
+    queryKey: ['trending', locale],
+    queryFn: () => Api.trending.getTrendingAll(locale),
+  })
 
-  const [dataTrendingAll, setDataTrendingAll] = useState([])
-
-  useEffect(() => {
-    setLoading(true)
-    const getData = async () => {
-      const response = await api.getTrendingAll(locale)
-      setDataTrendingAll(response.results)
-      setLoading(false)
-    }
-    getData()
-  }, [locale])
-
-  const handleClickInfor = (id: number, type: string) => {
-    router.push(`/detail-infor/${id}?` + new URLSearchParams({ media: type }))
-  }
-
-  if (loading) return <AppSpin />
+  if (isLoading) return <AppSpin />
 
   return (
     <div className="mx-6 mb-6 mt-16 sm:mx-0 sm:mb-8 sm:mt-0">
-      <SlideMedia data={dataTrendingAll} />
+      <SlideMedia data={data} />
 
       <div className="mx-[5%] flex flex-row flex-wrap justify-between gap-2 bp-425:mt-6 md:mt-0">
         <Image

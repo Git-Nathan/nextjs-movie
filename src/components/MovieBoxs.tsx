@@ -13,7 +13,7 @@ export interface IMovieBoxs {
   data: IMedia[]
 }
 
-export function MovieBoxsPopover() {}
+export function MovieBoxsPopover() { }
 
 export function MovieBoxs({ loading, data }: IMovieBoxs) {
   const t = useTranslations('Tooltip')
@@ -145,9 +145,8 @@ export function MovieBoxs({ loading, data }: IMovieBoxs) {
                     color="white"
                   >
                     <Link
-                      href={`${appRouter.detailInfo.index(result.id)}?media=${
-                        result.media_type
-                      }`}
+                      href={`${appRouter.detailInfo.index(result.id)}?media=${result.media_type
+                        }`}
                       className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-solid border-white bg-neutral600 text-white hover:cursor-pointer hover:bg-white hover:text-[#1A1D29]"
                     >
                       <InfoIcon />

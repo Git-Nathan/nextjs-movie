@@ -1,5 +1,4 @@
 import { IMedia } from '@/interfaces'
-import { AxiosResponse } from 'axios'
 import { lastValueFrom, map } from 'rxjs'
 import { axiosInstance } from '.'
 
@@ -11,15 +10,7 @@ export class Search {
           query: search_query,
           language: locale,
         })
-        .pipe(
-          map((response) => {
-            const { data } = response as AxiosResponse
-            return {
-              ...data,
-              results: data.results as IMedia[],
-            }
-          }),
-        ),
+        .pipe(map((response) => response.data?.results as IMedia[])),
     )
   }
 }

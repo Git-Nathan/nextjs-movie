@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Observable } from 'rxjs'
 
 export class AxiosObservable {
@@ -22,7 +22,7 @@ export class AxiosObservable {
   }
 
   request(config: AxiosRequestConfig) {
-    return new Observable((subscribe) => {
+    return new Observable<AxiosResponse<any>>((subscribe) => {
       this.axios
         .request({ ...config })
         .then((response) => {
